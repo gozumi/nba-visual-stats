@@ -1,3 +1,13 @@
 .home {
-  height: 100%;
+  padding: 3.5rem 2rem 2rem 2rem;
+  display: grid;
+  grid-template-areas:
+    "header"
+    "notifications";
+  grid-template-rows: 5.2rem auto;
 }
+
+.home__header {
+  grid-area: header;
+}
+

@@ -1,10 +1,10 @@
 import './_styles/main.css'
+import './load-text'
 
+import App from 'app/app.component'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import { AppContainer } from 'react-hot-loader'
-
-import App from './app/app.component'
 
 const rootElement = document.getElementById('app')
 

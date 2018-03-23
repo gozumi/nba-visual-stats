@@ -1,5 +1,5 @@
 body {
-  --background-color-start: #000000;
-  --background-color-mid: #cccccc;
-  --background-color-end: #ffffff;
+  --base-color: #000000;
+  --base-font-color: #cccccc;
+  --base-font-size: 10px;
 }
