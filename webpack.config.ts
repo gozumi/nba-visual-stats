@@ -12,6 +12,7 @@ const config: webpack.Configuration = {
 
   output: {
     filename: 'app.[hash].js',
+    globalObject: 'this',
     path: path.join(__dirname, './dist')
   },
 
