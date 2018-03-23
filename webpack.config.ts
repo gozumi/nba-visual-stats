@@ -30,7 +30,7 @@ const config: webpack.Configuration = {
     rules: [
       {
         // exclude: /.+\.spec\.tsx?$/,
-        loader: 'awesome-typescript-loader',
+        loader: 'ts-loader',
         test: /\.tsx?$/
       },
 
