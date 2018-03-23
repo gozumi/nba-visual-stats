@@ -1,0 +1,11 @@
+# dependencies
+node_modules/
+
+# build
+dist/
+
+# reports
+coverage/
+
+# sonarQube analysi files
+.scannerwork/

@@ -1,0 +1,21 @@
+@import './_variables.css';
+
+@keyframes background-colour-change {
+	0% { background-color: var(--background-color-start) }
+	50% { background-color: var(--background-color-mid) }
+	100% { background-color: var(--background-color-end) }
+}
+
+html, body {
+  width: 100vw;
+  height: 100vh;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  animation-name: background-colour-change;
+  animation-duration: 600s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
