@@ -60,6 +60,15 @@ const config: webpack.Configuration = {
             options: { sourceMap: true }
           }
         ]
+      },
+      {
+        test: /\.(png|svg)$/,
+        use: [
+          {
+            loader: 'url-loader',
+            options: { limit: 8192 }
+          }
+        ]
       }
     ]
   },
