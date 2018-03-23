@@ -2,6 +2,7 @@ import { DEVELOPMENT } from 'app/_contants'
 import rootEpic from 'app/state/epics'
 import rootReducer from 'app/state/reducers'
 import { IJourney } from 'app/state/reducers/journey/default-state'
+import { INotificationState } from 'app/state/reducers/notifications/default-state'
 import { ISystemState } from 'app/state/reducers/system/default-state'
 import { applyMiddleware, compose, createStore } from 'redux'
 import { createEpicMiddleware } from 'redux-observable'
@@ -25,7 +26,8 @@ export default store
 
 export interface IState {
   journey: IJourney,
-  system: ISystemState
+  system: ISystemState,
+  notifications: INotificationState
 }
 
 export interface IAction {

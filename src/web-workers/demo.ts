@@ -15,13 +15,12 @@ function handler (evt: MessageEvent) {
   }
 
   const handlerFunction = handlerMap[type]
-
   handlerFunction && handlerFunction()
 }
 
 function handleInitialisation () {
   const subject = Observable
-    .interval(60000)
+    .interval(1000)
     .timeInterval()
 
   subject
