@@ -9,3 +9,6 @@ coverage/
 
 # sonarQube analysi files
 .scannerwork/
+
+# error logs
+yarn-error.log

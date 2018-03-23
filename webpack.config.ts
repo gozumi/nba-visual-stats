@@ -6,6 +6,8 @@ import * as webpack from 'webpack'
 import { InjectManifest } from 'workbox-webpack-plugin'
 
 const config: webpack.Configuration = {
+  mode: 'development',
+
   entry: ['react-hot-loader/patch', './src/index.tsx'],
 
   output: {
@@ -27,10 +29,7 @@ const config: webpack.Configuration = {
     rules: [
       {
         // exclude: /.+\.spec\.tsx?$/,
-        loaders: [
-          'react-hot-loader/webpack',
-          'awesome-typescript-loader'
-        ],
+        loader: 'awesome-typescript-loader',
         test: /\.tsx?$/
       },
 
