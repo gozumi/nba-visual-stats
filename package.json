@@ -7,7 +7,7 @@
   "scripts": {
     "lint": "tslint --project tsconfig.json -c tslint.json",
     "build": "webpack --config webpack.config.ts",
-    "serve": "webpack-dev-server --config webpack.config.ts",
+    "serve": "NODE_ENV=development webpack-dev-server --config webpack.config.ts",
     "test": "jest \\.spec.tsx?$",
     "test-features": "jest feature$",
     "_deploy": "firebase deploy --token=$FIREBASE_DEPLOY_TOKEN",
@@ -26,6 +26,7 @@
     "@types/react-redux": "^5.0.15",
     "@types/react-router-dom": "^4.2.5",
     "@types/react-test-renderer": "^16.0.1",
+    "@types/rx-dom": "^7.0.0",
     "@types/webpack": "^4.1.2",
     "clean-webpack-plugin": "^0.1.19",
     "copy-webpack-plugin": "^4.5.1",
@@ -69,6 +70,7 @@
     "react-router-dom": "^4.2.2",
     "redux": "^3.7.2",
     "redux-observable": "^0.18.0",
+    "rx-dom": "^7.0.3",
     "rxjs": "^5.5.7"
   },
   "jest": {
