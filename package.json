@@ -5,7 +5,7 @@
   "author": "Ian Anderson",
   "license": "MIT",
   "scripts": {
-    "start": "pwd && node ./dist/index.js",
+    "start": "pwd && node ./dist/server/index.js",
     "build": "rm -rf dist && tsc && yarn build-client",
     "lint": "tslint --project tsconfig.json -c tslint.json",
     "build-client": "webpack --config webpack.config.ts",
