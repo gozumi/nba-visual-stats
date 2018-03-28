@@ -8,20 +8,20 @@ import { InjectManifest } from 'workbox-webpack-plugin'
 const config: webpack.Configuration = {
   mode: 'development',
 
-  entry: ['react-hot-loader/patch', './src/index.tsx'],
+  entry: ['react-hot-loader/patch', './src/client/index.tsx'],
 
   output: {
     filename: 'app.[hash].js',
     globalObject: 'this',
-    path: path.join(__dirname, './dist')
+    path: path.join(__dirname, './dist/public')
   },
 
   devtool: 'source-map',
 
   resolve: {
     alias: {
-      app: path.resolve(__dirname, 'src/app'),
-      ['web-workers']: path.resolve(__dirname, 'src/web-workers')
+      client: path.resolve(__dirname, 'src/client'),
+      ['web-workers']: path.resolve(__dirname, 'src/client/web-workers')
     },
     extensions: ['.ts', '.tsx', '.js', '.json']
   },
@@ -82,22 +82,22 @@ const config: webpack.Configuration = {
 
   plugins: [
     new HtmlWebpackPlugin({
-      template: './src/index.html'
+      template: './src/client/index.html'
     }),
     new webpack.NamedModulesPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
     }),
-    new CleanWebpackPlugin(['dist']),
+    new CleanWebpackPlugin(['dist/public']),
     CopyWebpackPlugin([
-      { from: './src/manifest.json' },
-      { from : './src/_assets' },
-      { from: './src/notifications.json' }
+      { from: './src/client/manifest.json' },
+      { from : './src/client/_assets' },
+      { from: './src/client/notifications.json' }
     ]),
     new InjectManifest({
       // include: [/\.(html|css|png)$/],
-      swSrc: './src/service-worker.js'
+      swSrc: './src/client/service-worker.js'
     })
   ]
 }
