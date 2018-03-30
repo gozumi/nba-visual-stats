@@ -8,7 +8,7 @@ export default express()
   .set('views', path.join(__dirname, 'views'))
   .set('view engine', 'ejs')
   .get('/', (req, res) => res.render('pages/index'))
-  .get('/really_working', (req, res) => res.send('It is really working!!!!'))
+  .get('/really_working', (req, res) => res.send('It is really working!'))
   .get('/times', (req, res) => {
     let result = ''
     const times = process.env.TIMES || 5
