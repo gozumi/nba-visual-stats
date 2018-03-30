@@ -5,7 +5,8 @@
   "author": "Ian Anderson",
   "license": "MIT",
   "scripts": {
-    "start": "pwd && node ./dist/server/index.js",
+    "start": "node ./dist/server/index.js",
+    "start-local": "nodemon",
     "build": "rm -rf dist && tsc && yarn build-client",
     "lint": "tslint --project tsconfig.json -c tslint.json",
     "build-client": "webpack --config webpack.config.ts",
@@ -102,5 +103,8 @@
     "moduleNameMapper": {
       "\\.(css|jpg|jpeg|png|gif|svg)": "<rootDir>/src/__mocks__/__file_mock__.ts"
     }
+  },
+  "devDependencies": {
+    "nodemon": "^1.17.2"
   }
 }
