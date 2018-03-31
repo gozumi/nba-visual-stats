@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "start": "node ./dist/server/index.js",
-    "start-local": "nodemon",
+    "start-local": "nodemon --config nodemon.json",
     "build": "rm -rf dist && tsc && yarn build-client",
     "lint": "tslint --project tsconfig.json -c tslint.json",
     "build-client": "webpack --config webpack.config.ts",

@@ -5,16 +5,38 @@ import * as path from 'path'
 export default express()
   .set('port', process.env.PORT || 5000)
   .use(express.static(path.join(__dirname, '../public')))
-  .set('views', path.join(__dirname, 'views'))
-  .set('view engine', 'ejs')
-  .get('/', (req, res) => res.render('pages/index'))
   .get('/really_working', (req, res) => res.send('It is really working!'))
-  .get('/times', (req, res) => {
-    let result = ''
-    const times = process.env.TIMES || 5
-    for (let i = 0; i < times; i++) {
-      result += `${i} `
-    }
-    res.send(result)
-  })
-  // .listen(PORT, () => console.log(`Listening on ${ PORT }`))
+  .use(notFoundErrorHandler)
+  .use(errorHandler)
+
+/**
+ *
+ * @param req
+ * @param res
+ * @param next
+ */
+function notFoundErrorHandler (req: express.Request, res: express.Response, next: express.NextFunction) {
+  console.log(res.status)
+  res.sendStatus(404)
+}
+
+/**
+ *
+ * @param err
+ * @param req
+ * @param res
+ * @param next
+ */
+function errorHandler (
+    err: any,
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+  ) {
+    // set locals, only providing error in development
+  res.locals.message = err.message
+  res.locals.error = req.app.get('env') === 'development' ? err : {}
+    // render the error page
+  res.status(err.status || 500)
+  res.render('error')
+}
