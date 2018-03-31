@@ -10,22 +10,21 @@ export default express()
   .use(errorHandler)
 
 /**
- *
- * @param req
- * @param res
- * @param next
+ * Handles routes that are not found. This function returns a 404 status in the response.
+ * @param req The request
+ * @param res The response
+ * @param next The next function in the chain
  */
 function notFoundErrorHandler (req: express.Request, res: express.Response, next: express.NextFunction) {
-  console.log(res.status)
   res.sendStatus(404)
 }
 
 /**
- *
- * @param err
- * @param req
- * @param res
- * @param next
+ * Handles server errors.
+ * @param err The error
+ * @param req The request
+ * @param res The response
+ * @param next Thenext funciton in the chain
  */
 function errorHandler (
     err: any,
