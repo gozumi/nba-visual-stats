@@ -87,7 +87,8 @@ const config: webpack.Configuration = {
     new webpack.NamedModulesPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
+      API_URL_BASE: process.env.NODE_ENV === 'development' ?
+        JSON.stringify('http://localhost:5000/') : JSON.stringify('/')
     }),
     new CleanWebpackPlugin(['dist/public']),
     CopyWebpackPlugin([

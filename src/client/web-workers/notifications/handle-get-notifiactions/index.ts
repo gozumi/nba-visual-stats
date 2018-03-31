@@ -1,5 +1,5 @@
-import { DOM } from 'rx-dom'
 import { GET_NOTIFICATIONS_ERROR, SET_NOTIFICATIONS } from 'client/web-workers/_message-types'
+import { DOM } from 'rx-dom'
 
 import { aggregateNotifications } from '../data-mapper'
 
@@ -14,10 +14,13 @@ import { aggregateNotifications } from '../data-mapper'
  * @param ctx The web worker in question
  */
 export function handleGetNotifications (ctx: Worker) {
+  console.log('Running App version ' + API_URL_BASE)
+
   DOM.ajax({
     responseType: 'json',
-    // url: getNotificationServiceURL()
-    url: './notifications.json'
+    // url getNotificationServiceURL()
+    // url './notifications.json'
+    url: 'http://localhost:5000/api/players_daily'
   })
   .subscribe(
     (data) => handleAjaxSuccess(data, ctx),
@@ -31,18 +34,18 @@ export function handleGetNotifications (ctx: Worker) {
  * @param ctx The web worker
  */
 function handleAjaxSuccess (data: DOM.AjaxSuccessResponse, ctx: Worker) {
-  // XXXX const { aggregationPointTypes, notifications } = data.response
-  const { aggregationPointTypes } = data.response
+  const { aggregationPointTypes, notifications } = data.response
+  // XXXconst { aggregationPointTypes } = data.response
   const dummyNotifications = getDummyNotifications()
 
   ctx.postMessage({
     aggregations: aggregateNotifications(
-      // notifications,
-      dummyNotifications,
+      notifications,
+      // dummyNotifications,
       aggregationPointTypes.map((type: any) => type.symbol)
     ),
-    // notifications,
-    notifications: dummyNotifications,
+    notifications,
+    // notifications: dummyNotifications,
     type: SET_NOTIFICATIONS
   })
 }
