@@ -17,6 +17,7 @@
     "deploy": "npm-run-all -s build _deploy"
   },
   "dependencies": {
+    "@types/cors": "^2.8.3",
     "@types/d3": "^5.0.0",
     "@types/enzyme": "^3.1.9",
     "@types/enzyme-adapter-react-16": "^1.0.2",
@@ -35,6 +36,7 @@
     "@types/webpack": "^4.1.3",
     "clean-webpack-plugin": "^0.1.19",
     "copy-webpack-plugin": "^4.5.1",
+    "cors": "^2.8.4",
     "css-loader": "^0.28.11",
     "d3": "^5.0.0",
     "enzyme": "^3.3.0",
@@ -79,6 +81,9 @@
     "workbox-webpack-plugin": "^3.0.1",
     "worker-loader": "^1.1.1"
   },
+  "devDependencies": {
+    "nodemon": "^1.17.2"
+  },
   "jest": {
     "setupTestFrameworkScriptFile": "<rootDir>/test-configuration/setup-tests.ts",
     "setupFiles": [
@@ -105,10 +110,5 @@
     "moduleNameMapper": {
       "\\.(css|jpg|jpeg|png|gif|svg)": "<rootDir>/src/__mocks__/__file_mock__.ts"
     }
-  },
-  "devDependencies": {
-    "@types/cors": "^2.8.3",
-    "cors": "^2.8.4",
-    "nodemon": "^1.17.2"
   }
 }
