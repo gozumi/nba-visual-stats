@@ -93,8 +93,8 @@ const config: webpack.Configuration = {
     new CleanWebpackPlugin(['dist/public']),
     CopyWebpackPlugin([
       { from: './src/client/manifest.json' },
-      { from : './src/client/_assets' },
-      { from: './src/client/notifications.json' }
+      { from : './src/client/_assets' }
+      // xxx{ from: './src/client/notifications.json' }
     ]),
     new InjectManifest({
       // include: [/\.(html|css|png)$/],
