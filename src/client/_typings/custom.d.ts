@@ -5,3 +5,5 @@ declare module 'worker-loader!*' {
  
   export = WebpackWorker;
 }
+
+declare var API_URL_BASE: string;
