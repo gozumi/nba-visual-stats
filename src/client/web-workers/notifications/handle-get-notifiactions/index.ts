@@ -20,7 +20,7 @@ export function handleGetNotifications (ctx: Worker) {
     responseType: 'json',
     // url getNotificationServiceURL()
     // url './notifications.json'
-    url: 'http://localhost:5000/api/players_daily'
+    url: `${API_URL_BASE}api/players_daily`
   })
   .subscribe(
     (data) => handleAjaxSuccess(data, ctx),
