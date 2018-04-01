@@ -1,14 +1,15 @@
 import './app.component.css'
 
-import { initialise } from 'client/app/state/action-creators/initialisation'
+import AppNavigation from 'client/app/blocks/app-navigation'
 import store from 'client/app/state/store'
 import * as React from 'react'
 import { Provider } from 'react-redux'
 import { HashRouter as Router, Redirect, Route, Switch } from 'react-router-dom'
 
-import AppNavigation from 'client/app/blocks/app-navigation'
 import Home from './features/home/home.component'
-store.dispatch(initialise())
+import { getDaily } from './state/action-creators/daily'
+
+store.dispatch(getDaily())
 
 export default class App extends React.Component<{}, {}> {
   public render () {
