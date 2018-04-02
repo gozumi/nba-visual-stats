@@ -12,7 +12,7 @@ interface IAggregationPoints {
  * the notification format needed by this application.
  * @param notifications The notifications to map
  */
-export function aggregateNotifications (
+export function aggregateData (
   list: INotification[],
   aggregationOrder: string[]
 ) {

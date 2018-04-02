@@ -1,13 +1,9 @@
 import { combineReducers } from 'redux'
 
-import journeyReducer from './journey'
-import notificationsReducer from './notifications'
-import systemReducer from './system'
+import dailyReducer from './daily'
 
 const rootReducer = combineReducers({
-  journey: journeyReducer,
-  notifications: notificationsReducer,
-  system: systemReducer
+  daily: dailyReducer
 })
 
 export default rootReducer

@@ -1,9 +1,9 @@
-import { INotificationState } from '../default-state'
+import { IDailyState } from '../default-state'
 
 export default function setStatus (
-  currenState: INotificationState,
+  currenState: IDailyState,
   newStatus: string
-): INotificationState {
+): IDailyState {
   return {
     ...currenState,
     status: newStatus
