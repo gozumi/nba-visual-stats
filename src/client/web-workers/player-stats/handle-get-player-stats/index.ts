@@ -1,7 +1,8 @@
-import { SET_DAILY, SET_DAILY_ERROR } from 'client/web-workers/_message-types'
+import { SET_PLAYER_STATS, SET_PLAYER_STATS_ERROR } from 'client/web-workers/_message-types'
 import { DOM } from 'rx-dom'
+import { IPlayerStats, IPlayerStatsListItem } from 'server/routes/api/player-stats/_interfaces'
 
-import { aggregateData } from '../data-mapper'
+import { aggregateData, POINTS_BREAKDOWN } from '../data-mapper'
 
 /**
  * Handles a GET_NOTIFICATIONS message received by the web worker. It handles
@@ -13,10 +14,10 @@ import { aggregateData } from '../data-mapper'
  * initiator.
  * @param ctx The web worker in question
  */
-export function handleGetDaily (ctx: Worker) {
+export function handleGetPlayerStats (ctx: Worker) {
   DOM.ajax({
     responseType: 'json',
-    url: `${API_URL_BASE}api/players_daily`
+    url: `${API_URL_BASE}api/players_stats`
   })
   .subscribe(
     (data) => handleAjaxSuccess(data, ctx),
@@ -30,13 +31,13 @@ export function handleGetDaily (ctx: Worker) {
  * @param ctx The web worker
  */
 function handleAjaxSuccess (data: DOM.AjaxSuccessResponse, ctx: Worker) {
+  const playerStats = (data.response as IPlayerStatsListItem[])
   ctx.postMessage({
-    daily: data.response,
-    // aggregations: aggregateData(
-    //   data.response,
-    //   aggregationPointTypes.map((type: any) => type.symbol)
-    // ),
-    type: SET_DAILY
+    payload: {
+      aggregations: aggregateData(playerStats, ['team', 'playerName', POINTS_BREAKDOWN]),
+      list: playerStats
+    },
+    type: SET_PLAYER_STATS
   })
 }
 
@@ -45,9 +46,9 @@ function handleAjaxSuccess (data: DOM.AjaxSuccessResponse, ctx: Worker) {
  * @param error The error received from the AJAX call
  * @param ctx The web worker
  */
-function handleAjaxErrors (error: DOM.AjaxSuccessResponse, ctx: Worker) {
+function handleAjaxErrors (error: DOM.AjaxErrorResponse, ctx: Worker) {
   ctx.postMessage({
     error,
-    type: SET_DAILY_ERROR
+    type: SET_PLAYER_STATS_ERROR
   })
 }

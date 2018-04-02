@@ -3,7 +3,8 @@ import rootEpic from 'client/app/state/epics'
 import rootReducer from 'client/app/state/reducers'
 import { applyMiddleware, compose, createStore } from 'redux'
 import { createEpicMiddleware } from 'redux-observable'
-import { IDailyState } from '../reducers/daily/default-state'
+
+import { IPlayerStatsState } from '../reducers/player-stats/default-state'
 
 const composeEnhancers = process.env.NODE_ENV === DEVELOPMENT ?
   ((self as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose) : compose
@@ -23,7 +24,7 @@ const store = createStore(
 export default store
 
 export interface IState {
-  daily: IDailyState
+  playerStats: IPlayerStatsState
 }
 
 export interface IAction {

@@ -1,25 +1,27 @@
 import { IAggregation } from 'client/app/components/partition-layout/partition-layout.component'
-import { IDaily } from 'server/routes/api/players-daily/_interfaces'
+import { IPlayerStats, PlayerStatsList } from 'server/routes/api/player-stats/_interfaces'
 
 export const STATUS_INITIAL = 'STATUS_INITIAL'
-export const STATUS_DAILY_RECEIVED = 'STATUS_DAILY_RECEIVED'
-export const STATUS_WAITING_FOR_DAILY = 'STATUS_WAITING_FOR_DAILY'
+export const STATUS_PLAYER_STATS_RECEIVED = 'STATUS_PLAYER_STATS_RECEIVED'
+export const STATUS_WAITING_FOR_PLAYER_STATS = 'STATUS_WAITING_FOR_PLAYER_STATS'
 export const STATUS_AWAITING_AGGREGATION_CHANGE = 'STATUS_AWAITING_AGGREGATION_CHANGE'
 export const STATUS_AGGREGATION_CHANGE_REQUEST_SENT = 'STATUS_AGGREGATION_CHANGE_REQUEST_SENT'
 
-export interface IDailyState {
-  status: string,
-  aggregations: IAggregation,
-  data: IDaily
+export interface IPlayerStatsState {
+  status: string
+  aggregations: IAggregation
+  list: PlayerStatsList
+  playerStats: IPlayerStats
 }
 
 export interface IAggregationPoints {
   [pointName: string]: string
 }
 
-const DEFAULT_STATE: IDailyState = {
+const DEFAULT_STATE: IPlayerStatsState = {
   aggregations: null,
-  data: null,
+  list: [],
+  playerStats: null,
   status: STATUS_INITIAL
 }
 

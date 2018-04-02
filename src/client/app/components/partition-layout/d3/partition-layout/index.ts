@@ -16,6 +16,7 @@ import {
   NODE_TEXT_CLASS,
   NODE_TEXT_CLASS_HIDDEN
 } from './_constants'
+import { calculateNodeHeight, calculateNodeWidth, calculateText } from './calculation-handlers'
 import { dragEnded, dragged, dragStarted, zoomInOnNode } from './event-handlers'
 
 export interface ID3PartitionProps {
@@ -55,7 +56,7 @@ export function renderD3PartitionLayout (props: ID3PartitionProps) {
     .round(true)
 
   const root = hierarchy(aggregations)
-  root.sum((d: any) => d.size)
+  root.sum((d: any) => d.points)
   partition(root)
   const data = root.descendants()
 
@@ -79,16 +80,11 @@ export function renderD3PartitionLayout (props: ID3PartitionProps) {
 
   nodeSelection
     .append('rect')
-    .attr('class', (d: any) => {
-      return `${NODE_RECT_CLASS} ${NODE_RECT_CLASS}--${d.data.status}`
-    })
+    .attr('class', (d: any) => NODE_RECT_CLASS)
     .attr('x', 1)
     .attr('y', 1)
-    .attr('width', (d: any) => scale.x(d.y1) - scale.x(d.y0) - 1)
-    .attr('height', (d: any) => scale.y(d.x1) - scale.y(d.x0) - 1)
-    .on('click', (d: any) => {
-      d.children && zoomInOnNode(d, nodeSelection, scale, aggregationPointOrder)
-    })
+    .attr('width', (d) => calculateNodeWidth(d, scale))
+    .attr('height', (d) => calculateNodeHeight(d, scale))
 
   graph
     .selectAll(`.${NODE_CLASS}`)
@@ -99,14 +95,14 @@ export function renderD3PartitionLayout (props: ID3PartitionProps) {
       })
       .on('drag', (d: any) => {
         dragged(
-          d.data.aggregationType,
+          d.data.type,
           aggregationPointOrder,
           graph
         )
       })
       .on('end', (d: any) => {
         dragEnded(
-          d.data.aggregationType,
+          d.data.type,
           aggregationPointOrder,
           graph,
           handleAggregationChange
@@ -116,13 +112,20 @@ export function renderD3PartitionLayout (props: ID3PartitionProps) {
 
   graph
     .selectAll(`.${NODE_CLASS}`)
-    .append('text')
-    .text((d: any) => d.data.name)
+    .append('foreignObject')
+    .append('xhtml:ul')
+    .attr('xmlns', 'http://www.w3.org/1999/xhtml')
+    .html(calculateText)
     .attr('class', NODE_TEXT_CLASS)
     .classed(NODE_TEXT_CLASS_HIDDEN, (d: any) => scale.y(d.x1) - scale.y(d.x0) < 15)
-    .attr('dy', 14)
-    .attr('dx', 5)
-    // .style('font-size', '13px')
+    .attr('style', (d: any) => {
+      const rectWidth = scale.x(d.y1) - scale.x(d.y0) - 5
+      const rectHeight = scale.y(d.x1) - scale.y(d.x0) - 3
+      return `width: ${rectWidth}px; height: ${rectHeight}px; padding: 3px 0 0 5px; margin: 0`
+    })
+    .on('click', (d: any) => {
+      d.children && zoomInOnNode(d, nodeSelection, scale, aggregationPointOrder)
+    })
 
   nodeSelection
     .append('use')

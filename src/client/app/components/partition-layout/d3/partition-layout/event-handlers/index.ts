@@ -10,6 +10,7 @@ import {
   NODE_TEXT_CLASS,
   NODE_TEXT_CLASS_HIDDEN
 } from '../_constants'
+import { calculateNodeHeight, calculateNodeWidth } from '../calculation-handlers'
 
 /**
  * Zooms in on a specific selection in the layout.
@@ -37,20 +38,16 @@ export function zoomInOnNode (
 
   transition
     .selectAll('rect')
-    .attr('width', (d: any) => {
-      return scale.x(d.y1) - scale.x(d.y0) - 1
-    })
-    .attr('height', (d: any) => {
-      return scale.y(d.x1) - scale.y(d.x0) - 1
-    })
+    .attr('width', (d) => calculateNodeWidth(d, scale))
+    .attr('height', (d) => calculateNodeHeight(d, scale))
 
   transition
     .selectAll(`.${NODE_TEXT_CLASS}`)
-    .attr('dx', (d: any) => {
-      return d.parent && (d === datum) ? 55 : 5
-    })
-    .attr('dy', (d: any) => {
-      return d.parent && (d === datum) ? 23 : 15
+    .attr('style', (d: any) => {
+      const y = d.parent && (d === datum) ? 40 : 3
+      const rectWidth = scale.x(d.y1) - scale.x(d.y0) - 5
+      const rectHeight = scale.y(d.x1) - scale.y(d.x0) - y
+      return `width: ${rectWidth}px; height: ${rectHeight}px; padding: ${y}px 0 0 5px; margin: 0`
     })
 
   const selectedNodeClass = `${NODE_CLASS}--selected`
@@ -70,8 +67,8 @@ export function zoomInOnNode (
  * @param d The nodes data
  */
 export function dragStarted (datum: any, graph: Selection<any, any, any, {}>) {
-  const { aggregationType } = datum.data
-  graph.selectAll(`.${AGGREGATION_CLASS}__${aggregationType}`)
+  const { type } = datum.data
+  graph.selectAll(`.${AGGREGATION_CLASS}__${type}`)
     .classed(NODE_CLASS_ACTIVE, true)
 }
 

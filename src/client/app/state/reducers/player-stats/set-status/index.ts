@@ -1,9 +1,9 @@
-import { IDailyState } from '../default-state'
+import { IPlayerStatsState } from '../default-state'
 
 export default function setStatus (
-  currenState: IDailyState,
+  currenState: IPlayerStatsState,
   newStatus: string
-): IDailyState {
+): IPlayerStatsState {
   return {
     ...currenState,
     status: newStatus

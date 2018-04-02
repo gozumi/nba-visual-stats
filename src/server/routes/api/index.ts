@@ -1,10 +1,9 @@
 import { Router } from 'express'
-import { notifications } from './notifications'
-import { playersDaily } from './players-daily'
+
+import { playerStats } from './player-stats'
 
 const apiRouter = Router()
 
-apiRouter.get('/players_daily', playersDaily)
-apiRouter.get('/notifications', notifications)
+apiRouter.get('/players_stats', playerStats)
 
 export default apiRouter

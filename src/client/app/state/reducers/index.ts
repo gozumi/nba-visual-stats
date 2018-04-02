@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux'
 
-import dailyReducer from './daily'
+import playerStatsReducer from './player-stats'
 
 const rootReducer = combineReducers({
-  daily: dailyReducer
+  playerStats: playerStatsReducer
 })
 
 export default rootReducer

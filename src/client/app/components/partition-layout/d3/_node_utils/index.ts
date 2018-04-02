@@ -14,8 +14,8 @@ export interface IScale {
  * @param d The nodes datum
  */
 export function setNodeClass (d: any) {
-  const { aggregationType } = d.data
-  const aggregationTypeClass = aggregationType ? `${AGGREGATION_CLASS}__${aggregationType}` : ''
+  const { type } = d.data
+  const aggregationTypeClass = type ? `${AGGREGATION_CLASS}__${type}` : ''
   const typeClass = `${NODE_CLASS}--${d.children ? 'internal' : 'leaf'}`
   return `${NODE_CLASS} ${typeClass} ${aggregationTypeClass}`.trim()
 }
@@ -38,13 +38,13 @@ export function updateOriginOnDatum (d: any, scale: IScale) {
  * so far
  */
 export function updateAggegationPointTypePosition (d: any, types: any[]) {
-  const { aggregationType } = d.data
-  if (aggregationType) {
-    const apt = types.find((item) => item.symbol === aggregationType)
+  const { type } = d.data
+  if (type) {
+    const apt = types.find((item) => item.symbol === type)
     if (apt) {
       apt.x = d.origin.x
     } else {
-      types.push({ symbol: aggregationType, x: d.origin.x })
+      types.push({ symbol: type, x: d.origin.x })
     }
   }
 }
