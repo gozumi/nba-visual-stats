@@ -1,11 +1,18 @@
 import { IPlayerStatsListItem } from 'server/routes/api/player-stats/_interfaces'
 
+export const THREE_POINTERS = '3 Pointers'
+export const TWO_POINTERS = '2 Pointers'
+export const FREE_THROWS = 'Free Throws'
+
 interface IAccumulator {
   title: string
   type: string
   accumulatedPoints: number
   points?: number
   children: IAccumulator[]
+  [THREE_POINTERS]: number
+  [TWO_POINTERS]: number
+  [FREE_THROWS]: number
 }
 
 export const POINTS_BREAKDOWN = 'points-breakdown'
@@ -23,7 +30,10 @@ export function aggregateData (
     accumulatedPoints: 0,
     children: [],
     title: 'All',
-    type: ''
+    type: '',
+    [THREE_POINTERS]: 0,
+    [TWO_POINTERS]: 0,
+    [FREE_THROWS]: 0
   }
 
   for (const player of playerStats) {
@@ -59,9 +69,12 @@ function addPlayerStatsToTree (player: IPlayerStatsListItem, acc: IAccumulator, 
     ap.points = order.length === 1 ? points : undefined
     ap.accumulatedPoints =
       ap.accumulatedPoints +
-      player.pointsBreakDown['3 Pointers'] +
-      player.pointsBreakDown['2 Pointers'] +
-      player.pointsBreakDown['Free Throws']
+      player.pointsBreakDown[THREE_POINTERS] +
+      player.pointsBreakDown[TWO_POINTERS] +
+      player.pointsBreakDown[FREE_THROWS]
+    ap[THREE_POINTERS] = ap[THREE_POINTERS] + player.pointsBreakDown[THREE_POINTERS]
+    ap[TWO_POINTERS] = ap[TWO_POINTERS] + player.pointsBreakDown[TWO_POINTERS]
+    ap[FREE_THROWS] = ap[FREE_THROWS] + player.pointsBreakDown[FREE_THROWS]
     addPlayerStatsToTree(player, ap, order.slice(1, order.length), points)
   }
 }
@@ -79,7 +92,10 @@ function _addPlayerStatsToTree (
       accumulatedPoints: 0,
       children: [],
       title: isPointsBreakDown ? apt : player[apt] as string,
-      type: isPointsBreakDown ? POINTS_BREAKDOWN : apt
+      type: isPointsBreakDown ? POINTS_BREAKDOWN : apt,
+      [THREE_POINTERS]: 0,
+      [TWO_POINTERS]: 0,
+      [FREE_THROWS]: 0
     }
     children.push(ap)
   }

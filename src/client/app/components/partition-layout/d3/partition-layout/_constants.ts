@@ -9,3 +9,5 @@ export const LEAF_NODE_CLASS_SUFFIX = 'leaf'
 export const INTERNAL_NODE_CLASS_SUFFIX = 'internal'
 export const NODE_CLASS_ACTIVE = `${NODE_CLASS}--active`
 export const NODE_CLASS_DROPABLE = `${NODE_CLASS}--dropable`
+
+export const MOUSE_MOVE = 'mousemove'

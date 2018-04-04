@@ -1,10 +1,11 @@
 import { ScaleLinear } from 'd3'
 
+import { IFisheye } from '../_fisheye'
 import { AGGREGATION_CLASS, NODE_CLASS } from '../partition-layout/_constants'
 
 export interface IScale {
-  x: ScaleLinear<number, number>,
-  y: ScaleLinear<number, number>,
+  x: IFisheye,
+  y: IFisheye,
   width: number,
   height: number
 }

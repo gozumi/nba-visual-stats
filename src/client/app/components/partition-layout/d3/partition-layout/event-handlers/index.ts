@@ -62,6 +62,38 @@ export function zoomInOnNode (
 
 }
 
+export function rescale (
+  nodeSelection: Selection<any, any, any, {}>,
+  scale: IScale,
+  aggregationPointOrder: any[]
+) {
+  const transition = nodeSelection
+    .transition()
+    .duration(10)
+    .attr('transform', (d: any) => {
+      updateOriginOnDatum(d, scale)
+      updateAggegationPointTypePosition(d, aggregationPointOrder)
+      return `translate(${scale.x(d.y0)}, ${scale.y(d.x0)})`
+    })
+
+  transition
+    .selectAll('rect')
+    .attr('width', (d) => calculateNodeWidth(d, scale))
+    .attr('height', (d) => calculateNodeHeight(d, scale))
+
+  transition
+    .selectAll(`.${NODE_TEXT_CLASS}`)
+    .attr('style', (d: any) => {
+      const rectWidth = scale.x(d.y1) - scale.x(d.y0) - 5
+      const rectHeight = scale.y(d.x1) - scale.y(d.x0) - 3
+      return `width: ${rectWidth}px; height: ${rectHeight}px; padding: 3px 0 0 5px; margin: 0`
+    })
+
+  nodeSelection
+    .selectAll(`.${NODE_TEXT_CLASS}`)
+    .classed(NODE_TEXT_CLASS_HIDDEN, (d: any) => scale.y(d.x1) - scale.y(d.x0) < 15)
+}
+
 /**
  * Initiates the start of drag of a specific node in the layout.
  * @param d The nodes data
