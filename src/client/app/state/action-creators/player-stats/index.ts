@@ -5,7 +5,6 @@ import {
   SET_PLAYER_STATS_STATUS
 } from 'client/app/state/action-types'
 import { IAction } from 'client/app/state/store'
-import { IPlayerStats } from 'server/routes/api/player-stats/_interfaces'
 
 export function getPlayerStats () {
   return {

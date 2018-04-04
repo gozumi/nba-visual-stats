@@ -1,6 +1,6 @@
 import { SET_PLAYER_STATS, SET_PLAYER_STATS_ERROR } from 'client/web-workers/_message-types'
 import { DOM } from 'rx-dom'
-import { IPlayerStats, IPlayerStatsListItem } from 'server/routes/api/player-stats/_interfaces'
+import { IPlayerStatsListItem } from 'server/routes/api/player-stats/_interfaces'
 
 import { aggregateData, POINTS_BREAKDOWN } from '../data-mapper'
 

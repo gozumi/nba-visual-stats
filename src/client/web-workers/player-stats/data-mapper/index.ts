@@ -1,8 +1,4 @@
-import { IPlayerStats, IPlayerStatsListItem, PlayerStatsResultSetRow } from 'server/routes/api/player-stats/_interfaces'
-
-interface IAggregationPoints {
-  [pointName: string]: string
-}
+import { IPlayerStatsListItem } from 'server/routes/api/player-stats/_interfaces'
 
 interface IAccumulator {
   title: string
@@ -24,6 +20,7 @@ export function aggregateData (
   order: string[]
 ) {
   const accumulator: IAccumulator = {
+    accumulatedPoints: 0,
     children: [],
     title: 'All',
     type: ''

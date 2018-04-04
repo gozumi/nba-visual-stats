@@ -31,7 +31,7 @@ function renderNavigationItems (data: INavigationItem[]) {
 }
 
 function renderNavigationItem (item: INavigationItem, idx: number) {
-  const { iconClass, label, link } = item
+  const { label, link } = item
 
   return (
     <li className='navigation__item' key={idx}>
