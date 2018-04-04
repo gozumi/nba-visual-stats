@@ -3,7 +3,7 @@ import * as CopyWebpackPlugin from 'copy-webpack-plugin'
 import * as HtmlWebpackPlugin from 'html-webpack-plugin'
 import * as path from 'path'
 import * as webpack from 'webpack'
-import { InjectManifest } from 'workbox-webpack-plugin'
+// xxximport { InjectManifest } from 'workbox-webpack-plugin'
 
 const config: webpack.Configuration = {
   mode: 'development',
@@ -95,11 +95,11 @@ const config: webpack.Configuration = {
       { from: './src/client/manifest.json' },
       { from : './src/client/_assets' }
       // xxx{ from: './src/client/notifications.json' }
-    ]),
-    new InjectManifest({
-      // include: [/\.(html|css|png)$/],
-      swSrc: './src/client/service-worker.js'
-    })
+    ])
+    // new InjectManifest({
+    //   // include: [/\.(html|css|png)$/],
+    //   swSrc: './src/client/service-worker.js'
+    // })
   ]
 }
 
