@@ -7,10 +7,10 @@ i18next.init({
     en: {
       translation: {
         home: {
-          title: 'Home'
+          title: 'Points Breakdown'
         },
         navigation: {
-          home: 'Home'
+          home: 'Ponits Breakdown'
         }
       }
     }

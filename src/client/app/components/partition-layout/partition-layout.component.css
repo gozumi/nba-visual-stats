@@ -30,11 +30,8 @@
 }
 
 .d3-partition-node__text {
-  fill: #ffffff;
-  fill-opacity: .6;
-  /* font-family: 'Roboto', sans-serif; */
   font-size: 13px;
-  stroke: none;
+  list-style-type: none;
 }
 
 .d3-partition-node__text--hidden {
