@@ -29,7 +29,6 @@ export function playerStats (req: Request, res: Response, next: NextFunction) {
     if (jsonBody && jsonBody.resultSets && jsonBody.resultSets[0]) {
       const rowSet = jsonBody.resultSets[0].rowSet
       returnValue = rowSet
-        .slice(rowSet.length > 0 ? rowSet.length - Math.floor(rowSet.length / 4) : 0)
         .map(listMapper)
     }
     res.json(returnValue)
