@@ -19,8 +19,3 @@ export function calculateNodeHeight (d: any, scale: IScale) {
   const rectHeight = scale.y(d.x1) - scale.y(d.x0)
   return rectHeight > 1 ? rectHeight - 1 : 0
 }
-
-export function calculateText (d: any) {
-  const { accumulatedPoints, title } = d.data
-  return `<li>${title}</li><li>${accumulatedPoints}</li>`
-}

@@ -32,6 +32,7 @@
 .d3-partition-node__text {
   font-size: 13px;
   list-style-type: none;
+  overflow: hidden;
 }
 
 .d3-partition-node__text--hidden {
