@@ -8,6 +8,7 @@ interface IAccumulator {
   title: string
   type: string
   accumulatedPoints: number
+  value: number
   points?: number
   children: IAccumulator[]
   [THREE_POINTERS]: number
@@ -31,6 +32,7 @@ export function aggregateData (
     children: [],
     title: 'All',
     type: '',
+    value: 0,
     [THREE_POINTERS]: 0,
     [TWO_POINTERS]: 0,
     [FREE_THROWS]: 0
@@ -58,7 +60,7 @@ function addPlayerStatsToTree (player: IPlayerStatsListItem, acc: IAccumulator, 
         const bdPoints = player.pointsBreakDown[pointType]
         if (bdPoints > 0) {
           ap = _addPlayerStatsToTree(player, acc, pointType, true)
-          ap.points = order.length === 1 ? bdPoints : undefined
+          ap.value = ap.points = order.length === 1 ? bdPoints : undefined
           ap.accumulatedPoints = ap.accumulatedPoints + player.pointsBreakDown[pointType]
           addPlayerStatsToTree(player, ap, order.slice(1, order.length), bdPoints)
         }
@@ -66,7 +68,7 @@ function addPlayerStatsToTree (player: IPlayerStatsListItem, acc: IAccumulator, 
     }
   } else {
     ap = _addPlayerStatsToTree(player, acc, apt)
-    ap.points = order.length === 1 ? points : undefined
+    ap.value = ap.points = order.length === 1 ? points : undefined
     ap.accumulatedPoints =
       ap.accumulatedPoints +
       player.pointsBreakDown[THREE_POINTERS] +
@@ -93,6 +95,7 @@ function _addPlayerStatsToTree (
       children: [],
       title: isPointsBreakDown ? apt : player[apt] as string,
       type: isPointsBreakDown ? POINTS_BREAKDOWN : apt,
+      value: 0,
       [THREE_POINTERS]: 0,
       [TWO_POINTERS]: 0,
       [FREE_THROWS]: 0
