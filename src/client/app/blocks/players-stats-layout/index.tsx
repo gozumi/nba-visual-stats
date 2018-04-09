@@ -13,7 +13,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(playerShotsLayoutCon
 
 export interface IPlayersStatsLayoutProps {
   aggregations: IAggregation
-  handleAggregationChange: (order: string[]) => void
+  aggregationChangeHandler: (order: string[]) => void
   className?: string
 }
 
@@ -42,9 +42,13 @@ function mapStateToProps (state: IState) {
   }
 }
 
+/**
+ *
+ * @param dispatch
+ */
 function mapDispatchToProps (dispatch: Dispatch<IAction>) {
   return {
-    handleAggregationChange: (order: string[]) => {
+    aggregationChangeHandler: (order: string[]) => {
       dispatch(requestAggregation(order))
     }
   }

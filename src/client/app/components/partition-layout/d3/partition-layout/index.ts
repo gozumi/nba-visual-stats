@@ -1,4 +1,4 @@
-import { drag, hierarchy, mouse, partition as d3Partition, scaleLinear, select } from 'd3'
+import { drag, hierarchy, partition as d3Partition, scaleLinear, select } from 'd3'
 
 import { IAggregation } from '../../partition-layout.component'
 import {
@@ -10,7 +10,6 @@ import {
 } from '../_node_utils'
 import {
   GRAPH_CLASS,
-  MOUSE_MOVE,
   NODE_ARROW,
   NODE_CLASS,
   NODE_RECT_CLASS,
@@ -18,12 +17,12 @@ import {
   NODE_TEXT_CLASS_HIDDEN
 } from './_constants'
 import { calculateNodeHeight, calculateNodeWidth } from './calculation-handlers'
-import { dragEnded, dragged, dragStarted, rescale, zoomInOnNode } from './event-handlers'
+import { dragEnded, dragged, dragStarted, zoomInOnNode } from './event-handlers'
 
 export interface ID3PartitionProps {
   domNode: SVGSVGElement
   aggregations: IAggregation
-  handleAggregationChange: (order: string[]) => void
+  aggregationChangeHandler: (order: string[]) => void
   nodeHtmlHandler: (d: any) => string
 }
 
@@ -35,7 +34,7 @@ export function renderD3PartitionLayout (props: ID3PartitionProps) {
   const {
     aggregations,
     domNode,
-    handleAggregationChange,
+    aggregationChangeHandler,
     nodeHtmlHandler
   } = props
 
@@ -63,7 +62,7 @@ export function renderD3PartitionLayout (props: ID3PartitionProps) {
     .round(true)
 
   const root = hierarchy(aggregations)
-  root.sum((d: any) => d.points)
+  root.sum((d: any) => d.value)
   partition(root)
   const data = root.descendants()
 
@@ -124,7 +123,7 @@ export function renderD3PartitionLayout (props: ID3PartitionProps) {
           d.data.type,
           aggregationPointOrder,
           graph,
-          handleAggregationChange
+          aggregationChangeHandler
         )
       })
     )
