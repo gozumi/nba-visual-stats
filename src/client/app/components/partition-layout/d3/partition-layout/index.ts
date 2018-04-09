@@ -1,7 +1,6 @@
-import { drag, hierarchy, mouse, partition as d3Partition, scaleLinear, select, Selection } from 'd3'
+import { drag, hierarchy, mouse, partition as d3Partition, scaleLinear, select } from 'd3'
 
 import { IAggregation } from '../../partition-layout.component'
-import fisheye from '../_fisheye'
 import {
   IScale,
   setNodeClass,
@@ -71,8 +70,10 @@ export function renderD3PartitionLayout (props: ID3PartitionProps) {
   const scale: IScale = {
     height: resolution.height,
     width: resolution.width,
-    x: fisheye.scale(scaleLinear).domain([(data[0] as any).y1, resolution.width]).range([0, width]),
-    y: fisheye.scale(scaleLinear).domain([0, resolution.height]).range([0, height])
+    x: scaleLinear().domain([(data[0] as any).y1, resolution.width]).range([0, width]),
+    y: scaleLinear().domain([0, resolution.height]).range([0, height])
+    // xxxx: fisheye.scale(scaleLinear).domain([(data[0] as any).y1, resolution.width]).range([0, width]),
+    // xxx y: fisheye.scale(scaleLinear).domain([0, resolution.height]).range([0, height])
   }
 
   const aggregationPointOrder: any [] = []
@@ -96,13 +97,13 @@ export function renderD3PartitionLayout (props: ID3PartitionProps) {
     .attr('width', (d) => calculateNodeWidth(d, scale))
     .attr('height', (d) => calculateNodeHeight(d, scale))
 
-  svg
-    .on(MOUSE_MOVE, () => {
-      const mouseCoordinatates = mouse(domNode)
-      scale.x.focus(mouseCoordinatates[0])
-      scale.y.focus(mouseCoordinatates[1])
-      rescale(nodeSelection, scale, aggregationPointOrder)
-    })
+  // svg
+  //   .on(MOUSE_MOVE, () => {
+  //     const mouseCoordinatates = mouse(domNode)
+  //     scale.x.focus(mouseCoordinatates[0])
+  //     scale.y.focus(mouseCoordinatates[1])
+  //     rescale(nodeSelection, scale, aggregationPointOrder)
+  //   })
 
   graph
     .selectAll(`.${NODE_CLASS}`)
