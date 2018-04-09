@@ -1,4 +1,5 @@
 .home {
+  position: relative;
   padding: 1rem 2rem 1rem 2rem;
   display: grid;
   grid-template-areas:
