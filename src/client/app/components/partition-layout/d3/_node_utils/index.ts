@@ -56,3 +56,15 @@ export function setNodeTransform (d: any) {
   const { x, y } = d.origin
   return `translate(${x}, ${y})`
 }
+
+/**
+ *
+ * @param d
+ * @param aggregationPointOrder
+ * @param scale
+ */
+export function translateNodePosition (d: any, aggregationPointOrder: string[], scale: IScale) {
+  updateOriginOnDatum(d, scale)
+  updateAggegationPointTypePosition(d, aggregationPointOrder)
+  return `translate(${scale.x(d.y0)}, ${scale.y(d.x0)})`
+}

@@ -1,6 +1,8 @@
 export const GRAPH_CLASS = 'd3-graph'
+export const COLUMN_GROUP = 'd3-graph__column'
 export const NODE_CLASS = 'd3-partition-node'
 export const AGGREGATION_CLASS = 'd3-partition-node-aggregation'
+export const NODE_TEXT_CLASS_CONTAINER = 'd3-partition-node__text-container'
 export const NODE_TEXT_CLASS = 'd3-partition-node__text'
 export const NODE_TEXT_CLASS_HIDDEN = `${NODE_TEXT_CLASS}--hidden`
 export const NODE_RECT_CLASS = 'd3-partition-node__rect'

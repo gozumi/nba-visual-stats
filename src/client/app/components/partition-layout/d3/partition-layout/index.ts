@@ -1,23 +1,17 @@
-import { drag, hierarchy, partition as d3Partition, scaleLinear, select } from 'd3'
+import { hierarchy, HierarchyNode, partition as d3Partition, scaleLinear, select } from 'd3'
 
-import { IAggregation } from '../../partition-layout.component'
-import {
-  IScale,
-  setNodeClass,
-  setNodeTransform,
-  updateAggegationPointTypePosition,
-  updateOriginOnDatum
-} from '../_node_utils'
-import {
-  GRAPH_CLASS,
-  NODE_ARROW,
-  NODE_CLASS,
-  NODE_RECT_CLASS,
-  NODE_TEXT_CLASS,
-  NODE_TEXT_CLASS_HIDDEN
-} from './_constants'
-import { calculateNodeHeight, calculateNodeWidth } from './calculation-handlers'
-import { dragEnded, dragged, dragStarted, zoomInOnNode } from './event-handlers'
+import { IDrawingSelections, IHierarchyNode } from '../_interfaces'
+import { IScale } from '../_node_utils'
+import { COLUMN_GROUP, GRAPH_CLASS } from './_constants'
+import { drawColumn } from './draw'
+import { updateScaleToZoom, zoomInOnNode } from './event-handlers/zoom'
+
+export interface IAggregation {
+  title: string
+  type: string
+  value: number
+  children?: IAggregation[]
+}
 
 export interface ID3PartitionProps {
   domNode: SVGSVGElement
@@ -64,95 +58,67 @@ export function renderD3PartitionLayout (props: ID3PartitionProps) {
   const root = hierarchy(aggregations)
   root.sum((d: any) => d.value)
   partition(root)
-  const data = root.descendants()
+  const data: Array<HierarchyNode<IAggregation>> = root.descendants()
 
   const scale: IScale = {
     height: resolution.height,
     width: resolution.width,
     x: scaleLinear().domain([(data[0] as any).y1, resolution.width]).range([0, width]),
     y: scaleLinear().domain([0, resolution.height]).range([0, height])
-    // xxxx: fisheye.scale(scaleLinear).domain([(data[0] as any).y1, resolution.width]).range([0, width]),
-    // xxx y: fisheye.scale(scaleLinear).domain([0, resolution.height]).range([0, height])
   }
 
   const aggregationPointOrder: any [] = []
 
-  const nodeSelection = graph
-    .selectAll(`.${NODE_CLASS}`)
-    .data(data)
-    .enter().append('g')
-    .attr('class', setNodeClass)
-    .attr('transform', (d) => {
-      updateOriginOnDatum(d, scale)
-      updateAggegationPointTypePosition(d, aggregationPointOrder)
-      return setNodeTransform(d)
-    })
+  // split column data
+  const columnData: Map<string, any[]> = new Map()
 
-  nodeSelection
-    .append('rect')
-    .attr('class', (d: any) => NODE_RECT_CLASS)
-    .attr('x', 1)
-    .attr('y', 1)
-    .attr('width', (d) => calculateNodeWidth(d, scale))
-    .attr('height', (d) => calculateNodeHeight(d, scale))
+  // drawColumn(graph, data, scale, aggregationPointOrder, aggregationChangeHandler, nodeHtmlHandler)
 
-  // svg
-  //   .on(MOUSE_MOVE, () => {
-  //     const mouseCoordinatates = mouse(domNode)
-  //     scale.x.focus(mouseCoordinatates[0])
-  //     scale.y.focus(mouseCoordinatates[1])
-  //     rescale(nodeSelection, scale, aggregationPointOrder)
-  //   })
+  for (const datum of data) {
+    const { type } = datum.data
+    const columnArray = columnData.get(type) || []
+    columnData.set(type, columnArray)
+    columnArray.push(datum)
+  }
 
-  graph
-    .selectAll(`.${NODE_CLASS}`)
-    .call(drag()
-      .subject((d: any) => ({ x: d.origin.x, y: d.origin.y }))
-      .on('start', (d) => {
-        dragStarted(d, graph)
+  const columnSelections: Map<string, IDrawingSelections> = new Map()
+  columnData.forEach((column, key) => {
+    const columnGroup = graph
+      .append('g')
+      .attr('class', `${COLUMN_GROUP} ${COLUMN_GROUP}-${key}`)
+    columnSelections.set(key, drawColumn(
+      columnGroup,
+      column,
+      scale,
+      aggregationPointOrder,
+      aggregationChangeHandler,
+      nodeHtmlHandler
+    ))
+  })
+
+  columnSelections.forEach((colSel) => {
+    const { arrows, text } = colSel
+    text
+      .on('click', (d: IHierarchyNode) => {
+        updateScaleToZoom(scale, d)
+        columnSelections.forEach((colSelInner) => {
+          const nodesInner = colSelInner.nodes
+          const rectanglesInner = colSelInner.rectangles
+          const textInner = colSelInner.text
+          zoomInOnNode(d, nodesInner, rectanglesInner, textInner, scale, aggregationPointOrder)
+        })
       })
-      .on('drag', (d: any) => {
-        dragged(
-          d.data.type,
-          aggregationPointOrder,
-          graph
-        )
+
+    arrows
+      .on('click', (d: IHierarchyNode) => {
+        const { parent } = d
+        updateScaleToZoom(scale, parent)
+        columnSelections.forEach((colSelInner) => {
+          const nodesInner = colSelInner.nodes
+          const rectanglesInner = colSelInner.rectangles
+          const textInner = colSelInner.text
+          zoomInOnNode(parent, nodesInner, rectanglesInner, textInner, scale, aggregationPointOrder)
+        })
       })
-      .on('end', (d: any) => {
-        dragEnded(
-          d.data.type,
-          aggregationPointOrder,
-          graph,
-          aggregationChangeHandler
-        )
-      })
-    )
-
-  graph
-    .selectAll(`.${NODE_CLASS}`)
-    .append('foreignObject')
-    .append('xhtml:ul')
-    .attr('xmlns', 'http://www.w3.org/1999/xhtml')
-    .html(nodeHtmlHandler)
-    .attr('class', NODE_TEXT_CLASS)
-    .classed(NODE_TEXT_CLASS_HIDDEN, (d: any) => scale.y(d.x1) - scale.y(d.x0) < 15)
-    .attr('style', (d: any) => {
-      const rectWidth = scale.x(d.y1) - scale.x(d.y0) - 5
-      const rectHeight = scale.y(d.x1) - scale.y(d.x0) - 3
-      return `width: ${rectWidth}px; height: ${rectHeight}px; padding: 3px 0 0 5px; margin: 0`
-    })
-    .on('click', (d: any) => {
-      zoomInOnNode(d, nodeSelection, scale, aggregationPointOrder)
-      // d.children && zoomInOnNode(d, nodeSelection, scale, aggregationPointOrder)
-    })
-
-  nodeSelection
-    .append('use')
-    .attr('class', NODE_ARROW)
-    .attr('x', 5)
-    .attr('y', 5)
-    .on('click', (d: any) => {
-      zoomInOnNode(d.parent, nodeSelection, scale, aggregationPointOrder)
-    })
-
+  })
 }

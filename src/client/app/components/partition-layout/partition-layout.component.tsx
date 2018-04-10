@@ -2,7 +2,7 @@ import './partition-layout.component.css'
 
 import * as React from 'react'
 
-import { renderD3PartitionLayout } from './d3/partition-layout'
+import { IAggregation, renderD3PartitionLayout } from './d3/partition-layout'
 
 /* tslint:disable:max-line-length */
 export interface IPartitionLayoutProps {
@@ -10,12 +10,6 @@ export interface IPartitionLayoutProps {
   aggregationChangeHandler: (order: string[]) => void
   nodeHtmlHandler: (d: any) => string
   className?: string
-}
-
-export interface IAggregation {
-  aggregationType: string
-  name: string
-  children?: IAggregation[]
 }
 
 /**

@@ -5,11 +5,11 @@ export const THREE_POINTERS = '3 Pointers'
 export const TWO_POINTERS = '2 Pointers'
 export const FREE_THROWS = 'Free Throws'
 
-interface IAccumulator {
+export interface IAccumulator {
   title: string
   type: string
-  accumulatedPoints: number
   value: number
+  accumulatedPoints: number
   points?: number
   children: IAccumulator[]
   [THREE_POINTERS]: number
