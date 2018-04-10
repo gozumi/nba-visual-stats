@@ -30,11 +30,7 @@ export function zoomInOnNode (
   const transition = nodeSelection
     .transition()
     .duration(750)
-    .attr('transform', (d: any) => {
-      updateOriginOnDatum(d, scale)
-      updateAggegationPointTypePosition(d, aggregationPointOrder)
-      return `translate(${scale.x(d.y0)}, ${scale.y(d.x0)})`
-    })
+    .attr('transform', (d: any) => translateNodePosition(d, aggregationPointOrder, scale))
 
   transition
     .selectAll('rect')
@@ -70,11 +66,7 @@ export function rescale (
   const transition = nodeSelection
     .transition()
     .duration(10)
-    .attr('transform', (d: any) => {
-      updateOriginOnDatum(d, scale)
-      updateAggegationPointTypePosition(d, aggregationPointOrder)
-      return `translate(${scale.x(d.y0)}, ${scale.y(d.x0)})`
-    })
+    .attr('transform', (d: any) => translateNodePosition(d, aggregationPointOrder, scale))
 
   transition
     .selectAll('rect')
@@ -174,4 +166,10 @@ function isAggregationPointRepositioned (
 
   return (i > 0 && xPos < aggregationPointOrder[i - 1].x)
     || ((i + 1) < aggregationPointOrder.length && xPos > aggregationPointOrder[i + 1].x)
+}
+
+function translateNodePosition (d: any, aggregationPointOrder: string[], scale: IScale) {
+  updateOriginOnDatum(d, scale)
+  updateAggegationPointTypePosition(d, aggregationPointOrder)
+  return `translate(${scale.x(d.y0)}, ${scale.y(d.x0)})`
 }

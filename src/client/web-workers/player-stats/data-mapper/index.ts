@@ -1,3 +1,4 @@
+/* tslint:disable:cognitive-complexity */
 import { IPlayerStatsListItem } from 'server/routes/api/player-stats/_interfaces'
 
 export const THREE_POINTERS = '3 Pointers'

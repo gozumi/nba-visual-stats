@@ -1,3 +1,4 @@
+/* tslint:disable:cognitive-complexity */
 import * as d3 from 'd3'
 
 export interface IFisheye {
