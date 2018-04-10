@@ -16,7 +16,7 @@ export default function WaitingRipple (props: IWaitingProps) {
   const componentClass = className ? `${baseClass} ${className}` : baseClass
 
   return (
-    <div className={baseClass}>
+    <div className={componentClass}>
       <div className='waiting-ripple' />
     </div>
   )

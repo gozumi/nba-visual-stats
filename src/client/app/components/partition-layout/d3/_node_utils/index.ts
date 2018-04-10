@@ -1,5 +1,3 @@
-import { ScaleLinear } from 'd3'
-
 import { IFisheye } from '../_fisheye'
 import { AGGREGATION_CLASS, NODE_CLASS } from '../partition-layout/_constants'
 

@@ -17,9 +17,7 @@ export interface ID3PartitionProps {
 export function renderD3PartitionLayout (props: ID3PartitionProps) {
   const {
     aggregations,
-    domNode,
-    handleAggregationChange,
-    nodeHtmlHandler
+    domNode
   } = props
 
   // terminate the function if there are no aggregations.
@@ -52,7 +50,7 @@ export function renderD3PartitionLayout (props: ID3PartitionProps) {
   const scale: IScale = {
     height: resolution.height,
     width: resolution.width,
-    x: scaleLinear().domain([(data[0] as any).y1, resolution.width]).range([0, width]),
+    x: scaleLinear().domain([(data[0]).y1, resolution.width]).range([0, width]),
     y: scaleLinear().domain([0, resolution.height]).range([0, height])
   }
 
