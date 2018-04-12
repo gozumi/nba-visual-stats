@@ -3,7 +3,7 @@ import { HierarchyNode, Selection } from 'd3'
 export interface IPartitionHierarchy {
   title: string
   type: string
-  value: number
+  value?: number
   children?: IPartitionHierarchy[]
 }
 
