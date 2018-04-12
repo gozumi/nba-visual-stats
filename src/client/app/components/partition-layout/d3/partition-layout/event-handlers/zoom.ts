@@ -20,7 +20,7 @@ export function zoomInOnNode (
   aggregationPointOrder: any[]
 ) {
   const duration = 750
-  const transition = nodeSelection
+  nodeSelection
     .transition()
     .duration(duration)
     .attr('transform', (d: any) => translateNodePosition(d, aggregationPointOrder, scale))

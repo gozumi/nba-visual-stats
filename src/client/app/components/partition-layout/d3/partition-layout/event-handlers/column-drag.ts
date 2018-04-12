@@ -1,7 +1,7 @@
 import { event, Selection } from 'd3'
 
 import { updateAggegationPointTypePosition, updateOriginOnDatum } from '../../_node_utils'
-import { AGGREGATION_CLASS, NODE_CLASS_ACTIVE, NODE_CLASS_DROPABLE } from '../_constants'
+import { NODE_CLASS_ACTIVE, NODE_CLASS_DROPABLE } from '../_constants'
 
 /**
  * Initiates the start of drag of a specific node in the layout.
