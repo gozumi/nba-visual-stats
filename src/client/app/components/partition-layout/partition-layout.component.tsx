@@ -2,11 +2,12 @@ import './partition-layout.component.css'
 
 import * as React from 'react'
 
-import { IAggregation, renderD3PartitionLayout } from './d3/partition-layout'
+import { IPartitionHierarchy } from './d3/_interfaces'
+import { renderD3PartitionLayout } from './d3/partition-layout'
 
 /* tslint:disable:max-line-length */
 export interface IPartitionLayoutProps {
-  aggregations: IAggregation
+  aggregations: IPartitionHierarchy
   aggregationChangeHandler: (order: string[]) => void
   nodeHtmlHandler: (d: any) => string
   className?: string
@@ -44,7 +45,7 @@ export default function PartitionLayout (props: IPartitionLayoutProps) {
  */
 function renderLayout (
   domNode: SVGSVGElement,
-  aggregations: IAggregation,
+  aggregations: IPartitionHierarchy,
   aggregationChangeHandler: (order: string[]) => void,
   nodeHtmlHandler: (d: any) => string
 ) {

@@ -1,6 +1,6 @@
 import { Selection } from 'd3'
 
-import { IHierarchyNode } from '../../_interfaces'
+import { PartitionHierarchyNode } from '../../_interfaces'
 import { IScale, translateNodePosition } from '../../_node_utils'
 import { NODE_ARROW, NODE_CLASS, NODE_TEXT_CLASS, NODE_TEXT_CLASS_HIDDEN } from '../_constants'
 import { calculateNodeHeight, calculateNodeWidth } from '../calculation-handlers'
@@ -59,7 +59,7 @@ export function zoomInOnNode (
  * @param scale The scale to be updated
  * @param datum The datum used to update the scale
  */
-export function updateScaleToZoom (scale: IScale, datum: IHierarchyNode): IScale {
+export function updateScaleToZoom (scale: IScale, datum: PartitionHierarchyNode): IScale {
   scale.x.domain([datum.parent ? datum.y0 : datum.y1, scale.width])
   scale.y.domain([datum.x0, datum.x1])
 

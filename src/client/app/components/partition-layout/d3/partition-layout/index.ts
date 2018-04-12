@@ -1,21 +1,14 @@
 import { hierarchy, HierarchyNode, partition as d3Partition, scaleLinear, select } from 'd3'
 
-import { IDrawingSelections, IHierarchyNode } from '../_interfaces'
+import { IDrawingSelections, IPartitionHierarchy, PartitionHierarchyNode } from '../_interfaces'
 import { IScale } from '../_node_utils'
 import { COLUMN_GROUP, GRAPH_CLASS } from './_constants'
 import { drawColumn } from './draw'
 import { updateScaleToZoom, zoomInOnNode } from './event-handlers/zoom'
 
-export interface IAggregation {
-  title: string
-  type: string
-  value: number
-  children?: IAggregation[]
-}
-
 export interface ID3PartitionProps {
   domNode: SVGSVGElement
-  aggregations: IAggregation
+  aggregations: IPartitionHierarchy
   aggregationChangeHandler: (order: string[]) => void
   nodeHtmlHandler: (d: any) => string
 }
@@ -58,7 +51,7 @@ export function renderD3PartitionLayout (props: ID3PartitionProps) {
   const root = hierarchy(aggregations)
   root.sum((d: any) => d.value)
   partition(root)
-  const data: Array<HierarchyNode<IAggregation>> = root.descendants()
+  const data: Array<HierarchyNode<IPartitionHierarchy>> = root.descendants()
 
   const scale: IScale = {
     height: resolution.height,
@@ -99,7 +92,7 @@ export function renderD3PartitionLayout (props: ID3PartitionProps) {
   columnSelections.forEach((colSel) => {
     const { arrows, text } = colSel
     text
-      .on('click', (d: IHierarchyNode) => {
+      .on('click', (d: PartitionHierarchyNode) => {
         updateScaleToZoom(scale, d)
         columnSelections.forEach((colSelInner) => {
           const nodesInner = colSelInner.nodes
@@ -110,7 +103,7 @@ export function renderD3PartitionLayout (props: ID3PartitionProps) {
       })
 
     arrows
-      .on('click', (d: IHierarchyNode) => {
+      .on('click', (d: PartitionHierarchyNode) => {
         const { parent } = d
         updateScaleToZoom(scale, parent)
         columnSelections.forEach((colSelInner) => {
