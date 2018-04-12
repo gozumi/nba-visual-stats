@@ -1,7 +1,6 @@
-import { drag, event, HierarchyNode, Selection } from 'd3'
+import { drag, Selection } from 'd3'
 
-import { IAggregation } from '..'
-import { IDrawingSelections, IHierarchyNode } from '../../_interfaces'
+import { IDrawingSelections, PartitionHierarchyNode } from '../../_interfaces'
 import {
   IScale,
   setNodeClass,
@@ -19,7 +18,6 @@ import {
 } from '../_constants'
 import { calculateNodeHeight, calculateNodeWidth } from '../calculation-handlers'
 import { dragColumn, endColumnDrag, startColumnDrag } from '../event-handlers/column-drag'
-import { updateScaleToZoom, zoomInOnNode } from '../event-handlers/zoom'
 
 /**
  *
@@ -32,7 +30,7 @@ import { updateScaleToZoom, zoomInOnNode } from '../event-handlers/zoom'
  */
 export function drawColumn (
   graph: Selection<any,any,any,any>,
-  data: IHierarchyNode[],
+  data: PartitionHierarchyNode[],
   scale: IScale,
   aggregationPointOrder: string[],
   aggregationChangeHandler: (order: string[]) => void,
@@ -59,10 +57,10 @@ export function drawColumn (
 
   const columnSelection = (nodes as Selection<any, any, any, any>)
     .call(drag()
-      .subject((d: IHierarchyNode) => ({ x: d.origin.x, y: d.origin.y }))
+      .subject((d: PartitionHierarchyNode) => ({ x: d.origin.x, y: d.origin.y }))
       .on('start', () => startColumnDrag(columnSelection))
-      .on('drag', (d: IHierarchyNode) => dragColumn(d.data.type, aggregationPointOrder, columnSelection))
-      .on('end', (d: IHierarchyNode) => {
+      .on('drag', (d: PartitionHierarchyNode) => dragColumn(d.data.type, aggregationPointOrder, columnSelection))
+      .on('end', (d: PartitionHierarchyNode) => {
         endColumnDrag(
           d.data.type,
           aggregationPointOrder,
@@ -79,9 +77,9 @@ export function drawColumn (
     .attr('xmlns', 'http://www.w3.org/1999/xhtml')
     .html(nodeHtmlHandler)
     .attr('class', NODE_TEXT_CLASS)
-    .classed(NODE_TEXT_CLASS_HIDDEN, (d: IHierarchyNode) => scale.y(d.x1) - scale.y(d.x0) < 15)
-    .style('width', (d: IHierarchyNode) => `${scale.x(d.y1) - scale.x(d.y0) - 5}px`)
-    .style('height', (d: IHierarchyNode) => `${scale.y(d.x1) - scale.y(d.x0) - 3}px`)
+    .classed(NODE_TEXT_CLASS_HIDDEN, (d: PartitionHierarchyNode) => scale.y(d.x1) - scale.y(d.x0) < 15)
+    .style('width', (d: PartitionHierarchyNode) => `${scale.x(d.y1) - scale.x(d.y0) - 5}px`)
+    .style('height', (d: PartitionHierarchyNode) => `${scale.y(d.x1) - scale.y(d.x0) - 3}px`)
     .style('padding', '3px 0 0 5px')
     .style('margin', '0')
 

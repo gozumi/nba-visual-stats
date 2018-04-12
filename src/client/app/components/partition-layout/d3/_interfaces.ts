@@ -1,7 +1,13 @@
 import { HierarchyNode, Selection } from 'd3'
-import { IAggregation } from './partition-layout'
 
-export interface IHierarchyDimensions {
+export interface IPartitionHierarchy {
+  title: string
+  type: string
+  value: number
+  children?: IPartitionHierarchy[]
+}
+
+export interface IPartitionHierarchyDimensions {
   x0?: number
   x1?: number
   y0?: number
@@ -12,7 +18,7 @@ export interface IHierarchyDimensions {
   }
 }
 
-export type IHierarchyNode = HierarchyNode<IAggregation> & IHierarchyDimensions
+export type PartitionHierarchyNode = HierarchyNode<IPartitionHierarchy> & IPartitionHierarchyDimensions
 
 export interface IDrawingSelections {
   arrows: Selection<any, any, any, any>
