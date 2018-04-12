@@ -23,6 +23,8 @@
 
 .d3-partition-node__rect {
   fill: #ff0000;
+  rx: 5;
+  ry: 5;
 }
 
 .d3-partition-node__text-container {
