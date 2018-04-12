@@ -12,14 +12,6 @@
   fill: #ffffff;
 }
 
-.d3-partition-node__rect--error {
-  fill: #ff0000;
-}
-
-.d3-partition-node__rect--success {
-  fill: #00ff00;
-}
-
 .d3-partition-node--internal {
   fill-opacity: .2;
   cursor: pointer;
@@ -27,6 +19,14 @@
 
 .d3-partition-node--leaf {
   fill-opacity: .4;
+}
+
+.d3-partition-node__rect {
+  fill: #ff0000;
+}
+
+.d3-partition-node__text-container {
+  background-color: rgba(255, 255, 255, .3);
 }
 
 .d3-partition-node__text {

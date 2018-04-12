@@ -1,22 +1,22 @@
 import './players-stats-layout.css'
 
 import PartitionLayout, {
-  IAggregation,
   IPartitionLayoutProps
 } from 'client/app/components/partition-layout/partition-layout.component'
 import Waiting from 'client/app/components/waiting-ripple/waiting-ripple.componnent'
 import { requestAggregation } from 'client/app/state/action-creators/player-stats'
 import { IAction, IState } from 'client/app/state/store'
-import { FREE_THROWS, THREE_POINTERS, TWO_POINTERS } from 'client/web-workers/player-stats/data-mapper'
+import { FREE_THROWS, IAccumulator, THREE_POINTERS, TWO_POINTERS } from 'client/web-workers/player-stats/data-mapper'
 import * as React from 'react'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
+
 import { STATUS_PLAYER_STATS_RECEIVED } from '../../state/reducers/player-stats/default-state'
 
 export default connect(mapStateToProps, mapDispatchToProps)(playerShotsLayoutContainer)
 
 export interface IPlayersStatsLayoutProps {
-  aggregations: IAggregation
+  aggregations: IAccumulator
   aggregationChangeHandler: (order: string[]) => void
   className?: string
   status: string
