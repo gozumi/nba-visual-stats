@@ -1,5 +1,6 @@
-import { IAccumulator } from 'client/web-workers/player-stats/data-mapper'
 import { IPlayerStats, PlayerStatsList } from 'server/routes/api/player-stats/_interfaces'
+
+import { PlayerHierarchy } from '../../../../web-workers/player-stats/data-mapper'
 
 export const STATUS_INITIAL = 'STATUS_INITIAL'
 export const STATUS_PLAYER_STATS_RECEIVED = 'STATUS_PLAYER_STATS_RECEIVED'
@@ -9,7 +10,7 @@ export const STATUS_AGGREGATION_CHANGE_REQUEST_SENT = 'STATUS_AGGREGATION_CHANGE
 
 export interface IPlayerStatsState {
   status: string
-  aggregations: IAccumulator
+  aggregations: PlayerHierarchy
   list: PlayerStatsList
   playerStats: IPlayerStats
 }

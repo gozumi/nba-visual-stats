@@ -1,21 +1,20 @@
 /* tslint:disable:cognitive-complexity */
 import { IPlayerStatsListItem } from 'server/routes/api/player-stats/_interfaces'
+import { IPartitionHierarchy } from '../../../app/components/partition-layout/d3/_interfaces'
 
 export const THREE_POINTERS = '3 Pointers'
 export const TWO_POINTERS = '2 Pointers'
 export const FREE_THROWS = 'Free Throws'
 
-export interface IAccumulator {
-  title: string
-  type: string
-  value: number
+interface IPlayerData {
   accumulatedPoints: number
   points?: number
-  children: IAccumulator[]
   [THREE_POINTERS]: number
   [TWO_POINTERS]: number
   [FREE_THROWS]: number
 }
+
+export type PlayerHierarchy = IPlayerData & IPartitionHierarchy
 
 export const POINTS_BREAKDOWN = 'points-breakdown'
 
@@ -28,7 +27,7 @@ export function aggregateData (
   playerStats: IPlayerStatsListItem[],
   order: string[]
 ) {
-  const accumulator: IAccumulator = {
+  const accumulator: PlayerHierarchy = {
     accumulatedPoints: 0,
     children: [],
     title: 'All',
@@ -46,13 +45,13 @@ export function aggregateData (
   return accumulator
 }
 
-function addPlayerStatsToTree (player: IPlayerStatsListItem, acc: IAccumulator, order: string[], points?: number) {
+function addPlayerStatsToTree (player: IPlayerStatsListItem, acc: PlayerHierarchy, order: string[], points?: number) {
   if (order.length === 0) {
     return
   }
 
   const apt = order[0]
-  let ap
+  let ap: PlayerHierarchy
 
   if (apt === POINTS_BREAKDOWN) {
     const { pointsBreakDown } = player
@@ -84,12 +83,13 @@ function addPlayerStatsToTree (player: IPlayerStatsListItem, acc: IAccumulator, 
 
 function _addPlayerStatsToTree (
   player: IPlayerStatsListItem,
-  acc: IAccumulator,
+  acc: PlayerHierarchy,
   apt: string,
   isPointsBreakDown?: boolean
 ) {
   const { children } = acc
-  let ap = children.find((child) => isPointsBreakDown ? child.title === apt : child.title === player[apt])
+  let ap: PlayerHierarchy = (children as PlayerHierarchy[])
+    .find((child) => isPointsBreakDown ? child.title === apt : child.title === player[apt])
   if (!ap) {
     ap = {
       accumulatedPoints: 0,
