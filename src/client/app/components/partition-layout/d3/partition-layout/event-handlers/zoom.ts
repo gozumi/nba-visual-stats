@@ -1,7 +1,7 @@
 import { Selection } from 'd3'
 
 import { PartitionHierarchyNode } from '../../_interfaces'
-import { IScale, translateNodePosition } from '../../_node_utils'
+import { IScale, setNodeHtmlBoxStyle, translateNodePosition } from '../../_node_utils'
 import { NODE_ARROW, NODE_CLASS, NODE_TEXT_CLASS, NODE_TEXT_CLASS_HIDDEN } from '../_constants'
 import { calculateNodeHeight, calculateNodeWidth } from '../calculation-handlers'
 
@@ -12,12 +12,12 @@ import { calculateNodeHeight, calculateNodeWidth } from '../calculation-handlers
  * @param scale The scale to use with the zoom
  */
 export function zoomInOnNode (
-  datum: any,
+  datum: PartitionHierarchyNode,
   nodeSelection: Selection<any, any, any, {}>,
   rectangleSelection: Selection<any, any, any, any>,
   textSelection: Selection<any, any, any, any>,
   scale: IScale,
-  aggregationPointOrder: any[]
+  aggregationPointOrder: string[]
 ) {
   const duration = 750
   nodeSelection
@@ -34,11 +34,15 @@ export function zoomInOnNode (
   textSelection
     .transition()
     .duration(duration)
-    .attr('style', (d: any) => {
-      const y = d.parent && (d === datum) ? 40 : 3
-      const rectWidth = scale.x(d.y1) - scale.x(d.y0) - 5
-      const rectHeight = scale.y(d.x1) - scale.y(d.x0) - y
-      return `width: ${rectWidth}px; height: ${rectHeight}px; padding: ${y}px 0 0 5px; margin: 0`
+    .attr('style', (d) => setNodeHtmlBoxStyle(d, scale))
+    .style('height', (d) => {
+      const offset = d.parent && (d === datum) ? 40 : 0
+      const rectHeight = scale.y(d.x1) - scale.y(d.x0) - offset
+      return `${rectHeight}px`
+    })
+    .style('padding-top', (d: PartitionHierarchyNode) => {
+      const offset = d.parent && (d === datum) ? 40 : 0
+      return `${offset}px`
     })
 
   const selectedNodeClass = `${NODE_CLASS}--selected`
@@ -50,7 +54,6 @@ export function zoomInOnNode (
   nodeSelection
     .selectAll(`.${NODE_TEXT_CLASS}`)
     .classed(NODE_TEXT_CLASS_HIDDEN, (d: any) => scale.y(d.x1) - scale.y(d.x0) < 15)
-
 }
 
 /**

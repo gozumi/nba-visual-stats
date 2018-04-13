@@ -73,10 +73,12 @@ function calculateText (d: HierarchyNode<PlayerHierarchy>) {
   const threePointersTotal = d.data[THREE_POINTERS]
   const twoPointersTotal = d.data[TWO_POINTERS]
   const freeThrowsTotal = d.data[FREE_THROWS]
-  const line1 = `<li>${title}</li>`
-  const line2 = `<li>total points: ${accumulatedPoints}</li>`
-  const line3 = `<li>3 pointers: ${threePointersTotal}</li>`
-  const line4 = `<li>2 pointers: ${twoPointersTotal}</li>`
-  const line5 = `<li>Free throws: ${freeThrowsTotal}</li>`
-  return line1 + line2 + line3 + line4 + line5
+  const line1 = `<ul class="player-stats-layout__node">`
+  const line2 = `<li>${title}</li>`
+  const line3 = `<li>total points: ${accumulatedPoints}</li>`
+  const line4 = `<li>3 pointers: ${threePointersTotal}</li>`
+  const line5 = `<li>2 pointers: ${twoPointersTotal}</li>`
+  const line6 = `<li>Free throws: ${freeThrowsTotal}</li>`
+  const line7 = `</ul>`
+  return line1 + line2 + line3 + line4 + line5 + line6 + line7
 }

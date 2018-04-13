@@ -93,6 +93,10 @@ export function renderD3PartitionLayout (props: ID3PartitionProps) {
     const { arrows, text } = colSel
     text
       .on('click', (d: PartitionHierarchyNode) => {
+        if (scale.y(d.x0) === 0 && scale.y(d.x1) === height) {
+          return
+        }
+
         updateScaleToZoom(scale, d)
         columnSelections.forEach((colSelInner) => {
           const nodesInner = colSelInner.nodes

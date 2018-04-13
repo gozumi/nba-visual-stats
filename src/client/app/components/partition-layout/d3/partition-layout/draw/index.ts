@@ -4,6 +4,7 @@ import { IDrawingSelections, PartitionHierarchyNode } from '../../_interfaces'
 import {
   IScale,
   setNodeClass,
+  setNodeHtmlBoxStyle,
   setNodeTransform,
   updateAggegationPointTypePosition,
   updateOriginOnDatum
@@ -73,15 +74,12 @@ export function drawColumn (
   const text = nodes
     .append('foreignObject')
     .attr('class', NODE_TEXT_CLASS_CONTAINER)
-    .append('xhtml:ul')
+    .append('xhtml:div')
     .attr('xmlns', 'http://www.w3.org/1999/xhtml')
     .html(nodeHtmlHandler)
     .attr('class', NODE_TEXT_CLASS)
     .classed(NODE_TEXT_CLASS_HIDDEN, (d: PartitionHierarchyNode) => scale.y(d.x1) - scale.y(d.x0) < 15)
-    .style('width', (d: PartitionHierarchyNode) => `${scale.x(d.y1) - scale.x(d.y0) - 5}px`)
-    .style('height', (d: PartitionHierarchyNode) => `${scale.y(d.x1) - scale.y(d.x0) - 3}px`)
-    .style('padding', '3px 0 0 5px')
-    .style('margin', '0')
+    .attr('style', (d) => setNodeHtmlBoxStyle(d, scale))
 
   const arrows = nodes
     .append('use')
