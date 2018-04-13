@@ -34,7 +34,8 @@ export function drawColumn (
   scale: IScale,
   aggregationPointOrder: string[],
   aggregationChangeHandler: (order: string[]) => void,
-  nodeHtmlHandler: (d: any) => string
+  nodeHtmlHandler: (d: any) => string,
+  nodeHtmlClassName: string
 ): IDrawingSelections {
   const nodes = graph
     .selectAll(`.${NODE_CLASS}`)
@@ -70,13 +71,14 @@ export function drawColumn (
       })
     )
 
+  const nodeClass = nodeHtmlClassName ? `${NODE_TEXT_CLASS} ${nodeHtmlClassName}` : NODE_TEXT_CLASS
   const text = nodes
     .append('foreignObject')
     .attr('class', NODE_TEXT_CLASS_CONTAINER)
     .append('xhtml:div')
     .attr('xmlns', 'http://www.w3.org/1999/xhtml')
     .html(nodeHtmlHandler)
-    .attr('class', NODE_TEXT_CLASS)
+    .attr('class', nodeClass)
     .attr('style', (d) => setNodeHtmlBoxStyle(d, scale))
 
   const arrows = nodes
