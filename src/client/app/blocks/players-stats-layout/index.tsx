@@ -38,7 +38,11 @@ function playerShotsLayoutContainer (props: IPlayersStatsLayoutProps) {
   const componentClass = className ? `${baseClass} ${className}` : baseClass
   return (
     <div className={componentClass}>
-      <PartitionLayout {...partitionLayoutProps} className='player-stats-layout__layout' />
+      <PartitionLayout
+        {...partitionLayoutProps}
+        className='player-stats-layout__layout'
+        nodeHtmlClassName='player-stats-layout__node-inner'
+      />
       {status !== STATUS_PLAYER_STATS_RECEIVED && <Waiting />}
     </div>
   )

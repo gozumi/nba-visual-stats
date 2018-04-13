@@ -11,6 +11,7 @@ export interface ID3PartitionProps {
   aggregations: IPartitionHierarchy
   aggregationChangeHandler: (order: string[]) => void
   nodeHtmlHandler: (d: any) => string
+  nodeHtmlClassName?: string
 }
 
 /**
@@ -22,7 +23,8 @@ export function renderD3PartitionLayout (props: ID3PartitionProps) {
     aggregations,
     domNode,
     aggregationChangeHandler,
-    nodeHtmlHandler
+    nodeHtmlHandler,
+    nodeHtmlClassName
   } = props
 
   // terminate the function if there are no aggregations.
@@ -65,8 +67,6 @@ export function renderD3PartitionLayout (props: ID3PartitionProps) {
   // split column data
   const columnData: Map<string, any[]> = new Map()
 
-  // drawColumn(graph, data, scale, aggregationPointOrder, aggregationChangeHandler, nodeHtmlHandler)
-
   for (const datum of data) {
     const { type } = datum.data
     const columnArray = columnData.get(type) || []
@@ -85,7 +85,8 @@ export function renderD3PartitionLayout (props: ID3PartitionProps) {
       scale,
       aggregationPointOrder,
       aggregationChangeHandler,
-      nodeHtmlHandler
+      nodeHtmlHandler,
+      nodeHtmlClassName
     ))
   })
 
