@@ -14,8 +14,7 @@ import {
   NODE_CLASS,
   NODE_RECT_CLASS,
   NODE_TEXT_CLASS,
-  NODE_TEXT_CLASS_CONTAINER,
-  NODE_TEXT_CLASS_HIDDEN
+  NODE_TEXT_CLASS_CONTAINER
 } from '../_constants'
 import { calculateNodeHeight, calculateNodeWidth } from '../calculation-handlers'
 import { dragColumn, endColumnDrag, startColumnDrag } from '../event-handlers/column-drag'
@@ -78,7 +77,6 @@ export function drawColumn (
     .attr('xmlns', 'http://www.w3.org/1999/xhtml')
     .html(nodeHtmlHandler)
     .attr('class', NODE_TEXT_CLASS)
-    .classed(NODE_TEXT_CLASS_HIDDEN, (d: PartitionHierarchyNode) => scale.y(d.x1) - scale.y(d.x0) < 15)
     .attr('style', (d) => setNodeHtmlBoxStyle(d, scale))
 
   const arrows = nodes

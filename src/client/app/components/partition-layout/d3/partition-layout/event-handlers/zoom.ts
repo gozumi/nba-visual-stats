@@ -2,7 +2,7 @@ import { Selection } from 'd3'
 
 import { PartitionHierarchyNode } from '../../_interfaces'
 import { IScale, setNodeHtmlBoxStyle, translateNodePosition } from '../../_node_utils'
-import { NODE_ARROW, NODE_CLASS, NODE_TEXT_CLASS, NODE_TEXT_CLASS_HIDDEN } from '../_constants'
+import { NODE_ARROW, NODE_CLASS } from '../_constants'
 import { calculateNodeHeight, calculateNodeWidth } from '../calculation-handlers'
 
 /**
@@ -50,10 +50,6 @@ export function zoomInOnNode (
     .classed(selectedNodeClass, (d) => d === datum)
     .select(`.${NODE_ARROW}`)
     .attr('xlink:href', (d) => d.parent && (d === datum) ? '#zoom-out-arrow' : null)
-
-  nodeSelection
-    .selectAll(`.${NODE_TEXT_CLASS}`)
-    .classed(NODE_TEXT_CLASS_HIDDEN, (d: any) => scale.y(d.x1) - scale.y(d.x0) < 15)
 }
 
 /**

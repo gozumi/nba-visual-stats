@@ -4,7 +4,6 @@ export const NODE_CLASS = 'd3-partition-node'
 export const AGGREGATION_CLASS = 'd3-partition-node-aggregation'
 export const NODE_TEXT_CLASS_CONTAINER = 'd3-partition-node__text-container'
 export const NODE_TEXT_CLASS = 'd3-partition-node__text'
-export const NODE_TEXT_CLASS_HIDDEN = `${NODE_TEXT_CLASS}--hidden`
 export const NODE_RECT_CLASS = 'd3-partition-node__rect'
 export const NODE_ARROW = 'd3-partition-node__arrow'
 export const LEAF_NODE_CLASS_SUFFIX = 'leaf'
