@@ -1,7 +1,7 @@
 import { Selection } from 'd3'
 
 import { IScale, translateNodePosition } from '../../_node_utils'
-import { NODE_TEXT_CLASS, NODE_TEXT_CLASS_HIDDEN } from '../_constants'
+import { NODE_TEXT_CLASS } from '../_constants'
 import { calculateNodeHeight, calculateNodeWidth } from '../calculation-handlers'
 
 /**
@@ -32,8 +32,4 @@ export function rescale (
       const rectHeight = scale.y(d.x1) - scale.y(d.x0) - 3
       return `width: ${rectWidth}px; height: ${rectHeight}px; padding: 3px 0 0 5px; margin: 0`
     })
-
-  nodeSelection
-    .selectAll(`.${NODE_TEXT_CLASS}`)
-    .classed(NODE_TEXT_CLASS_HIDDEN, (d: any) => scale.y(d.x1) - scale.y(d.x0) < 15)
 }
