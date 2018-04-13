@@ -1,6 +1,5 @@
-import { HierarchyNode } from 'd3'
 import { IFisheye } from '../_fisheye'
-import { IPartitionHierarchy, PartitionHierarchyNode } from '../_interfaces'
+import { PartitionHierarchyNode } from '../_interfaces'
 import { AGGREGATION_CLASS, NODE_CLASS } from '../partition-layout/_constants'
 
 export interface IScale {
