@@ -9,13 +9,7 @@ import {
   updateAggegationPointTypePosition,
   updateOriginOnDatum
 } from '../../_node_utils'
-import {
-  NODE_ARROW,
-  NODE_CLASS,
-  NODE_RECT_CLASS,
-  NODE_TEXT_CLASS,
-  NODE_TEXT_CLASS_CONTAINER
-} from '../_constants'
+import { NODE_ARROW, NODE_CLASS, NODE_RECT_CLASS, NODE_TEXT_HTML } from '../_constants'
 import { calculateNodeHeight, calculateNodeWidth } from '../calculation-handlers'
 import { dragColumn, endColumnDrag, startColumnDrag } from '../event-handlers/column-drag'
 
@@ -71,10 +65,9 @@ export function drawColumn (
       })
     )
 
-  const nodeClass = nodeHtmlClassName ? `${NODE_TEXT_CLASS} ${nodeHtmlClassName}` : NODE_TEXT_CLASS
-  const text = nodes
+  const nodeClass = nodeHtmlClassName ? `${NODE_TEXT_HTML} ${nodeHtmlClassName}` : NODE_TEXT_HTML
+  const html = nodes
     .append('foreignObject')
-    .attr('class', NODE_TEXT_CLASS_CONTAINER)
     .append('xhtml:div')
     .attr('xmlns', 'http://www.w3.org/1999/xhtml')
     .html(nodeHtmlHandler)
@@ -87,5 +80,5 @@ export function drawColumn (
     .attr('x', 5)
     .attr('y', 5)
 
-  return { arrows, nodes, rectangles, text }
+  return { arrows, nodes, rectangles, html }
 }

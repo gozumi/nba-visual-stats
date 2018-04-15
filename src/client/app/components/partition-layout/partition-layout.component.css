@@ -27,18 +27,10 @@
   ry: 5;
 }
 
-.d3-partition-node__text-container {
-  background-color: rgba(255, 255, 255, .3);
-}
-
-.d3-partition-node__text {
+.d3-partition-node__html {
   font-size: 13px;
   list-style-type: none;
   overflow: hidden;
-}
-
-.d3-partition-node__text--hidden {
-  font-size: 0;
 }
 
 .d3-partition-node--active {
