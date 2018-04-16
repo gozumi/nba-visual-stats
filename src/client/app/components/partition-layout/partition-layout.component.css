@@ -28,8 +28,6 @@
 }
 
 .d3-partition-node__html {
-  font-size: 13px;
-  list-style-type: none;
   overflow: hidden;
 }
 
