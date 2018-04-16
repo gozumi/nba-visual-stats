@@ -1,6 +1,6 @@
 import { hierarchy, HierarchyNode, partition as d3Partition, scaleLinear, select } from 'd3'
 
-import { IDrawingSelections, IPartitionHierarchy, PartitionHierarchyNode } from '../_interfaces'
+import { IDrawingSelections, IPartitionHierarchy, NodeHandler, PartitionHierarchyNode } from '../_interfaces'
 import { IScale } from '../_node_utils'
 import { CLICK, COLUMN_GROUP, DBL_CLICK, GRAPH_CLASS } from './_constants'
 import { drawColumn } from './draw'
@@ -10,8 +10,9 @@ export interface ID3PartitionProps {
   domNode: SVGSVGElement
   aggregations: IPartitionHierarchy
   aggregationChangeHandler: (order: string[]) => void
-  nodeHtmlHandler: (d: PartitionHierarchyNode) => string
-  nodeHtmlClassName?: string
+  customNodeHtmlHandler?: NodeHandler
+  customNodeClassHandler?: NodeHandler
+  customNodeColourHandler?: NodeHandler
 }
 
 /**
@@ -23,8 +24,9 @@ export function renderD3PartitionLayout (props: ID3PartitionProps) {
     aggregations,
     domNode,
     aggregationChangeHandler,
-    nodeHtmlHandler,
-    nodeHtmlClassName
+    customNodeHtmlHandler,
+    customNodeClassHandler,
+    customNodeColourHandler
   } = props
 
   // terminate the function if there are no aggregations.
@@ -62,10 +64,10 @@ export function renderD3PartitionLayout (props: ID3PartitionProps) {
     y: scaleLinear().domain([0, resolution.height]).range([0, height])
   }
 
-  const aggregationPointOrder: any [] = []
+  const aggregationPointOrder: string[] = []
 
   // split column data
-  const columnData: Map<string, any[]> = new Map()
+  const columnData: Map<string, PartitionHierarchyNode[]> = new Map()
 
   for (const datum of data) {
     const { type } = datum.data
@@ -79,15 +81,19 @@ export function renderD3PartitionLayout (props: ID3PartitionProps) {
     const columnGroup = graph
       .append('g')
       .attr('class', `${COLUMN_GROUP} ${COLUMN_GROUP}-${key}`)
-    columnSelections.set(key, drawColumn(
-      columnGroup,
-      column,
-      scale,
-      aggregationPointOrder,
-      aggregationChangeHandler,
-      nodeHtmlHandler,
-      nodeHtmlClassName
-    ))
+    columnSelections.set(
+      key,
+      drawColumn({
+        aggregationChangeHandler,
+        aggregationPointOrder,
+        columnData: column,
+        columnGroup,
+        customNodeClassHandler,
+        customNodeColourHandler,
+        customNodeHtmlHandler,
+        scale
+      })
+    )
   })
 
   columnSelections.forEach((colSel) => {

@@ -31,7 +31,8 @@ function playerShotsLayoutContainer (props: IPlayersStatsLayoutProps) {
   const partitionLayoutProps: IPartitionLayoutProps = {
     aggregationChangeHandler,
     aggregations,
-    nodeHtmlHandler: calculateText
+    customNodeColourHandler: workOutNodeColour,
+    customNodeHtmlHandler: calculateNodeHtml
   }
 
   const baseClass = 'player-stats-layout'
@@ -41,7 +42,6 @@ function playerShotsLayoutContainer (props: IPlayersStatsLayoutProps) {
       <PartitionLayout
         {...partitionLayoutProps}
         className='player-stats-layout__layout'
-        nodeHtmlClassName='player-stats-layout__node-inner'
       />
       {status !== STATUS_PLAYER_STATS_RECEIVED && <Waiting />}
     </div>
@@ -72,7 +72,7 @@ function mapDispatchToProps (dispatch: Dispatch<IAction>) {
   }
 }
 
-function calculateText (d: HierarchyNode<PlayerHierarchy>) {
+function calculateNodeHtml (d: HierarchyNode<PlayerHierarchy>) {
   const { accumulatedPoints, title } = d.data
   const threePointersTotal = d.data[THREE_POINTERS]
   const twoPointersTotal = d.data[TWO_POINTERS]
@@ -85,4 +85,8 @@ function calculateText (d: HierarchyNode<PlayerHierarchy>) {
   const line6 = `<li>Free throws: ${freeThrowsTotal}</li>`
   const line7 = `</ul>`
   return line1 + line2 + line3 + line4 + line5 + line6 + line7
+}
+
+function workOutNodeColour (d: HierarchyNode<PlayerHierarchy>) {
+  return 'purple'
 }

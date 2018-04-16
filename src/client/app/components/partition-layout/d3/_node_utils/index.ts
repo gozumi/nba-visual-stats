@@ -1,5 +1,5 @@
 import { IFisheye } from '../_fisheye'
-import { PartitionHierarchyNode } from '../_interfaces'
+import { NodeHandler, PartitionHierarchyNode } from '../_interfaces'
 import { AGGREGATION_CLASS, NODE_CLASS } from '../partition-layout/_constants'
 
 export interface IScale {
@@ -13,11 +13,49 @@ export interface IScale {
  * Sets the classes associated with the node.
  * @param d The nodes datum
  */
-export function setNodeClass (d: PartitionHierarchyNode) {
+export function setNodeClass (d: PartitionHierarchyNode, customClassHandler: (d: PartitionHierarchyNode) => string) {
   const { type } = d.data
   const aggregationTypeClass = type ? `${AGGREGATION_CLASS}__${type}` : ''
   const typeClass = `${NODE_CLASS}--${d.children ? 'internal' : 'leaf'}`
-  return `${NODE_CLASS} ${typeClass} ${aggregationTypeClass}`.trim()
+
+  let customClass: string = ''
+  if (customClassHandler) {
+    customClass = customClassHandler(d)
+  }
+
+  return `${NODE_CLASS} ${typeClass} ${aggregationTypeClass} ${customClass}`.trim()
+}
+
+/**
+ * Produces the HTML for the ;current datum by envoking a custom handler if it has
+ * been passed in. If no custom handler was passed in, default html is returned.
+ * @param d The current datum
+ * @param nodeHtmlHandler A custom handler for producing the nodes' html
+ */
+export function setNodeHtml (d: PartitionHierarchyNode, customNodeHtmlHandler?: NodeHandler) {
+  if (customNodeHtmlHandler) {
+    return customNodeHtmlHandler(d)
+  } else {
+    const { type, value } = d.data
+    const opening = '<ul>'
+    const closing = '</ul>'
+    const typeHtml = `<li>type: ${type}</li>`
+    const valueHtml = `<li>value: ${value}</li>`
+    return opening + typeHtml + valueHtml + closing
+  }
+}
+
+/**
+ * Produces the colour for the nodes' rectangle.
+ * @param d The current datum
+ * @param customColourHandler A custom handler for determining the colour of the node
+ */
+export function setNodeColour (d: PartitionHierarchyNode, customColourHandler: NodeHandler) {
+  if (customColourHandler) {
+    return customColourHandler(d)
+  } else {
+    return '#cccccc'
+  }
 }
 
 /**

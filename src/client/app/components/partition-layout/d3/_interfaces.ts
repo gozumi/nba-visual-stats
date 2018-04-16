@@ -26,3 +26,5 @@ export interface IDrawingSelections {
   rectangles: Selection<any, any, any, any>
   html: Selection<any, any, any, any>
 }
+
+export type NodeHandler = (d: PartitionHierarchyNode) => string
