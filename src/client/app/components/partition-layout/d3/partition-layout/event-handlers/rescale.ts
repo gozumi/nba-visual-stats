@@ -1,7 +1,7 @@
 import { Selection } from 'd3'
 
 import { IScale, translateNodePosition } from '../../_node_utils'
-import { NODE_TEXT_CLASS } from '../_constants'
+import { NODE_TEXT_HTML } from '../_constants'
 import { calculateNodeHeight, calculateNodeWidth } from '../calculation-handlers'
 
 /**
@@ -26,7 +26,7 @@ export function rescale (
     .attr('height', (d) => calculateNodeHeight(d, scale))
 
   transition
-    .selectAll(`.${NODE_TEXT_CLASS}`)
+    .selectAll(`.${NODE_TEXT_HTML}`)
     .attr('style', (d: any) => {
       const rectWidth = scale.x(d.y1) - scale.x(d.y0) - 5
       const rectHeight = scale.y(d.x1) - scale.y(d.x0) - 3

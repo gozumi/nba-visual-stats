@@ -2,7 +2,7 @@ import { hierarchy, HierarchyNode, partition as d3Partition, scaleLinear, select
 
 import { IDrawingSelections, IPartitionHierarchy, PartitionHierarchyNode } from '../_interfaces'
 import { IScale } from '../_node_utils'
-import { COLUMN_GROUP, GRAPH_CLASS } from './_constants'
+import { CLICK, COLUMN_GROUP, DBL_CLICK, GRAPH_CLASS } from './_constants'
 import { drawColumn } from './draw'
 import { updateScaleToZoom, zoomInOnNode } from './event-handlers/zoom'
 
@@ -10,7 +10,7 @@ export interface ID3PartitionProps {
   domNode: SVGSVGElement
   aggregations: IPartitionHierarchy
   aggregationChangeHandler: (order: string[]) => void
-  nodeHtmlHandler: (d: any) => string
+  nodeHtmlHandler: (d: PartitionHierarchyNode) => string
   nodeHtmlClassName?: string
 }
 
@@ -91,9 +91,15 @@ export function renderD3PartitionLayout (props: ID3PartitionProps) {
   })
 
   columnSelections.forEach((colSel) => {
-    const { arrows, text } = colSel
-    text
-      .on('click', (d: PartitionHierarchyNode) => {
+    const { arrows, html } = colSel
+
+    html
+      .on(DBL_CLICK, () => {
+        // xxxconsole.log('>>>>>>>> doble clicked!')
+      })
+      .on(CLICK, (d: PartitionHierarchyNode) => {
+        // xxxconst clickTime = new Date().getTime()
+        // xxxconsole.log('>>>>>>>> sngle clicked!', clickTime)
         if (scale.y(d.x0) === 0 && scale.y(d.x1) === height) {
           return
         }
@@ -102,20 +108,20 @@ export function renderD3PartitionLayout (props: ID3PartitionProps) {
         columnSelections.forEach((colSelInner) => {
           const nodesInner = colSelInner.nodes
           const rectanglesInner = colSelInner.rectangles
-          const textInner = colSelInner.text
+          const textInner = colSelInner.html
           zoomInOnNode(d, nodesInner, rectanglesInner, textInner, scale, aggregationPointOrder)
         })
       })
 
     arrows
-      .on('click', (d: PartitionHierarchyNode) => {
+      .on(CLICK, (d: PartitionHierarchyNode) => {
         const { parent } = d
         updateScaleToZoom(scale, parent)
         columnSelections.forEach((colSelInner) => {
           const nodesInner = colSelInner.nodes
           const rectanglesInner = colSelInner.rectangles
-          const textInner = colSelInner.text
-          zoomInOnNode(parent, nodesInner, rectanglesInner, textInner, scale, aggregationPointOrder)
+          const htmlInner = colSelInner.html
+          zoomInOnNode(parent, nodesInner, rectanglesInner, htmlInner, scale, aggregationPointOrder)
         })
       })
   })

@@ -24,5 +24,5 @@ export interface IDrawingSelections {
   arrows: Selection<any, any, any, any>
   nodes: Selection<any, any, any, any>
   rectangles: Selection<any, any, any, any>
-  text: Selection<any, any, any, any>
+  html: Selection<any, any, any, any>
 }
