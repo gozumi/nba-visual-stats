@@ -8,17 +8,12 @@
   fill-opacity: .6;
 }
 
-.d3-partition-node--internal {
-  fill-opacity: .2;
+.d3-partition-node {
+  fill-opacity: .8;
   cursor: pointer;
 }
 
-.d3-partition-node--leaf {
-  fill-opacity: .4;
-}
-
 .d3-partition-node__rect {
-  /* fill: #cccccc; */
   rx: 5;
   ry: 5;
 }
@@ -28,9 +23,9 @@
 }
 
 .d3-partition-node--active {
-  fill-opacity: .29;
+  fill-opacity: .4;
 }
 
 .d3-partition-node--dropable {
-  fill-opacity: .39;
+  fill-opacity: .7;
 }
