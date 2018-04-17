@@ -9,6 +9,7 @@
 }
 
 .d3-partition-node {
+  fill-opacity: .8;
   cursor: pointer;
 }
 
@@ -22,9 +23,9 @@
 }
 
 .d3-partition-node--active {
-  fill-opacity: .29;
+  fill-opacity: .4;
 }
 
 .d3-partition-node--dropable {
-  fill-opacity: .39;
+  fill-opacity: .7;
 }
