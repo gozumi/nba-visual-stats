@@ -8,10 +8,6 @@
   fill-opacity: .6;
 }
 
-.d3-partition-node__rect {
-  fill: #ffffff;
-}
-
 .d3-partition-node--internal {
   fill-opacity: .2;
   cursor: pointer;
@@ -22,7 +18,7 @@
 }
 
 .d3-partition-node__rect {
-  fill: #ff0000;
+  /* fill: #cccccc; */
   rx: 5;
   ry: 5;
 }
