@@ -11,5 +11,7 @@ export const NODE_CLASS_ACTIVE = `${NODE_CLASS}--active`
 export const NODE_CLASS_DROPABLE = `${NODE_CLASS}--dropable`
 
 export const CLICK = 'click'
-export const DBL_CLICK = 'dblclick'
+export const DOUBLE_CLICK = 'dblclick'
 export const MOUSE_MOVE = 'mousemove'
+export const MOUSE_OVER = 'mouseover'
+export const MOUSE_LEAVE = 'mouseleave'
