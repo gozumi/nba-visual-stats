@@ -1,10 +1,11 @@
 import { hierarchy, HierarchyNode, partition as d3Partition, scaleLinear, select } from 'd3'
+import { Subject } from 'rxjs'
 
 import { IDrawingSelections, IPartitionHierarchy, NodeHandler, PartitionHierarchyNode } from '../_interfaces'
 import { IScale } from '../_node_utils'
-import { CLICK, COLUMN_GROUP, DBL_CLICK, GRAPH_CLASS } from './_constants'
+import { CLICK, COLUMN_GROUP, DOUBLE_CLICK, GRAPH_CLASS } from './_constants'
 import { drawColumn } from './draw'
-import { updateScaleToZoom, zoomInOnNode } from './event-handlers/zoom'
+import { updateScaleToZoom, zoomInOnMousePointer, zoomInOnNode } from './event-handlers/zoom'
 
 export interface ID3PartitionProps {
   domNode: SVGSVGElement
@@ -96,26 +97,34 @@ export function renderD3PartitionLayout (props: ID3PartitionProps) {
     )
   })
 
+  const clickText$: Subject<() => void> = new Subject()
+  clickText$
+    .debounceTime(200)
+    .subscribe((cb) => cb())
+
   columnSelections.forEach((colSel) => {
     const { arrows, html } = colSel
 
     html
-      .on(DBL_CLICK, () => {
-        // xxxconsole.log('>>>>>>>> doble clicked!')
+      .on(DOUBLE_CLICK, (d: PartitionHierarchyNode) => {
+        clickText$.next(() => {
+          zoomInOnMousePointer(d, resolution.height, scale, columnSelections, aggregationPointOrder)
+        })
       })
       .on(CLICK, (d: PartitionHierarchyNode) => {
-        // xxxconst clickTime = new Date().getTime()
-        // xxxconsole.log('>>>>>>>> sngle clicked!', clickTime)
-        if (scale.y(d.x0) === 0 && scale.y(d.x1) === height) {
-          return
-        }
 
-        updateScaleToZoom(scale, d)
-        columnSelections.forEach((colSelInner) => {
-          const nodesInner = colSelInner.nodes
-          const rectanglesInner = colSelInner.rectangles
-          const textInner = colSelInner.html
-          zoomInOnNode(d, nodesInner, rectanglesInner, textInner, scale, aggregationPointOrder)
+        clickText$.next(() => {
+          if (scale.y(d.x0) === 0 && scale.y(d.x1) === height) {
+            return
+          }
+
+          updateScaleToZoom(scale, d)
+          columnSelections.forEach((colSelInner) => {
+            const nodesInner = colSelInner.nodes
+            const rectanglesInner = colSelInner.rectangles
+            const textInner = colSelInner.html
+            zoomInOnNode(d, nodesInner, rectanglesInner, textInner, scale, aggregationPointOrder)
+          })
         })
       })
 
