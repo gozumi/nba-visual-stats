@@ -5,7 +5,9 @@ import { AGGREGATION_CLASS, NODE_CLASS } from '../partition-layout/_constants'
 
 export interface IScale {
   x: ScaleLinear<number, number>
+  xOrigin: number
   y: ScaleLinear<number, number>
+  yOrigin: number
   width: number
   height: number
 }

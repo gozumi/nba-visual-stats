@@ -62,7 +62,9 @@ export function renderD3PartitionLayout (props: ID3PartitionProps) {
     height: resolution.height,
     width: resolution.width,
     x: scaleLinear().domain([(data[0] as any).y1, resolution.width]).range([0, width]),
-    y: scaleLinear().domain([0, resolution.height]).range([0, height])
+    xOrigin: (data[0] as any).y1,
+    y: scaleLinear().domain([0, resolution.height]).range([0, height]),
+    yOrigin: 0
   }
 
   const aggregationPointOrder: string[] = []
@@ -108,7 +110,7 @@ export function renderD3PartitionLayout (props: ID3PartitionProps) {
     html
       .on(DOUBLE_CLICK, (d: PartitionHierarchyNode) => {
         clickText$.next(() => {
-          zoomInOnMousePointer(d, resolution.height, scale, columnSelections, aggregationPointOrder)
+          zoomInOnMousePointer(d, scale, columnSelections, aggregationPointOrder)
         })
       })
       .on(CLICK, (d: PartitionHierarchyNode) => {
