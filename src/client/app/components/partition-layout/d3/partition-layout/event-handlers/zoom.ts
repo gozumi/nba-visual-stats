@@ -100,6 +100,10 @@ export function resizeColumns (
       const rectHeight = scale.y(d.x1) - scale.y(d.x0)
       return `${rectHeight}px`
     })
+
+  nodeSelection
+    .select(`.${NODE_ARROW}`)
+    .attr('xlink:href', null)
 }
 
 /**
@@ -112,7 +116,6 @@ export function resizeColumns (
  */
 export function zoomInOnMousePointer (
   d: PartitionHierarchyNode,
-  resolutionHeight: number,
   scale: IScale,
   columnSelections: Map<string, IDrawingSelections>,
   aggregationPointOrder: string[]
@@ -121,8 +124,19 @@ export function zoomInOnMousePointer (
   let lowerLimit = d.x0 - (nodeHeight * 1.5)
   lowerLimit = lowerLimit < 0 ? 0 : lowerLimit
   let upperLimit = d.x1 + (nodeHeight * 1.5)
-  upperLimit = upperLimit > resolutionHeight ? resolutionHeight : upperLimit
-  scale.y.domain([lowerLimit, upperLimit])
+  upperLimit = upperLimit > scale.height ? scale.height : upperLimit
+
+  const currentDomain = scale.y.domain()
+
+  if (currentDomain[0] === lowerLimit && currentDomain[1] === upperLimit) {
+    scale.y.domain([0, scale.height])
+    const domain = scale.x.domain()
+    domain[0] = scale.xOrigin
+    scale.x.domain(domain)
+  } else {
+    scale.y.domain([lowerLimit, upperLimit])
+  }
+
   columnSelections.forEach((selection) => {
     const nodesInner = selection.nodes
     const rectanglesInner = selection.rectangles
