@@ -1,6 +1,4 @@
 import { event, Selection } from 'd3'
-
-import { updateAggegationPointTypePosition, updateOriginOnDatum } from '../../_node_utils'
 import { NODE_CLASS_ACTIVE, NODE_CLASS_DROPABLE } from '../_constants'
 
 /**

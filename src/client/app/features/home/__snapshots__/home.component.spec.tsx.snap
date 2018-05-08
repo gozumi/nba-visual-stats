@@ -2,8 +2,13 @@
 
 exports[`feature: Home should render correctly 1`] = `
 <section
-  className="home"
+  className="feature home"
 >
-  <Connect(JourneyContainer) />
+  <h1
+    className="home__header"
+  />
+  <Connect(playerShotsLayoutContainer)
+    className="dashboard-notifications"
+  />
 </section>
 `;
