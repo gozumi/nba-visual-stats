@@ -1,8 +1,7 @@
-import 'rxjs/add/operator/debounceTime'
-
 import { hierarchy, HierarchyNode, partition as d3Partition, scaleLinear, select } from 'd3'
 import { Subject } from 'rxjs'
 
+import { debounceTime } from 'rxjs/operators'
 import { IDrawingSelections, IPartitionHierarchy, NodeHandler, PartitionHierarchyNode } from '../_interfaces'
 import { IScale } from '../_node_utils'
 import { CLICK, COLUMN_GROUP, DOUBLE_CLICK, GRAPH_CLASS } from './_constants'
@@ -102,9 +101,11 @@ export function renderD3PartitionLayout (props: ID3PartitionProps) {
   })
 
   const clickText$: Subject<() => void> = new Subject()
-  clickText$
-    .debounceTime(200)
-    .subscribe((cb) => cb())
+
+  clickText$.pipe(
+    debounceTime(200)
+  )
+  .subscribe((cb: () => void) => cb())
 
   columnSelections.forEach((colSel) => {
     const { arrows, html } = colSel
