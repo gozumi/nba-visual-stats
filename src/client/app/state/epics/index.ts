@@ -18,8 +18,10 @@ export default rootEpic
 
 function getPlayerStats (action$: ActionsObservable<IAction>) {
   return action$
-    .filter((action) => action.type === GET_PLAYER_STATS)
-    .map(getPlayerStatsFromWebWorker)
+    .pipe(
+      filter((action) => action.type === GET_PLAYER_STATS),
+      map(getPlayerStatsFromWebWorker)
+    )
 }
 
 function changePlayerStatsAggregation (action$: ActionsObservable<IAction>, store: Store<IState>) {
