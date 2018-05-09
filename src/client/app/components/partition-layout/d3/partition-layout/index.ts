@@ -1,3 +1,5 @@
+import 'rxjs/add/operator/debounceTime'
+
 import { hierarchy, HierarchyNode, partition as d3Partition, scaleLinear, select } from 'd3'
 import { Subject } from 'rxjs'
 
@@ -6,8 +8,6 @@ import { IScale } from '../_node_utils'
 import { CLICK, COLUMN_GROUP, DOUBLE_CLICK, GRAPH_CLASS } from './_constants'
 import { drawColumn } from './draw'
 import { updateScaleToZoom, zoomInOnMousePointer, zoomInOnNode } from './event-handlers/zoom'
-
-import 'rxjs/add/operator/debounceTime'
 
 export interface ID3PartitionProps {
   domNode: SVGSVGElement
