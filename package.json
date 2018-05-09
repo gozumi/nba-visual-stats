@@ -61,7 +61,6 @@
     "request": "^2.85.0",
     "rx-dom": "^7.0.3",
     "rxjs": "^6.1.0",
-    "rxjs-compat": "^6.1.0",
     "source-map-loader": "^0.2.3",
     "standard-version": "^4.3.0",
     "standardts": "^1.0.0",
