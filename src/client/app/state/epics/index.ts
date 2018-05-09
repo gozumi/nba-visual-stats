@@ -2,13 +2,13 @@ import 'rxjs/add/operator/filter'
 import 'rxjs/add/operator/map'
 
 import { IAction, IState } from 'client/app/state/store'
-import { Store } from 'redux'
+import { Dispatch, Store } from 'redux'
 import { ActionsObservable, combineEpics, Epic } from 'redux-observable'
 
 import { GET_PLAYER_STATS, REQUEST_NEW_PLAYER_STATS_AGGREGATION } from '../action-types'
 import { getPlayerStatsFromWebWorker, requestAggregationChangeFromWebWorker } from './web-worker-instances/player-stats'
 
-const rootEpic: Epic<IAction, IState> = combineEpics(
+const rootEpic: Epic<IAction, Dispatch<IAction>> = combineEpics(
   getPlayerStats,
   changePlayerStatsAggregation
 )
