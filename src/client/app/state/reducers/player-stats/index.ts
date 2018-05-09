@@ -1,6 +1,6 @@
 import { SET_PLAYER_STATS, SET_PLAYER_STATS_STATUS } from 'client/app/state/action-types'
-import { IAction } from 'client/app/state/store'
 
+import { IAction } from '../../store/_interfaces'
 import DEFAULT_STATE, { IPlayerStatsState } from './default-state'
 import setPlayerStats from './set-player-stats'
 import setStatus from './set-status'

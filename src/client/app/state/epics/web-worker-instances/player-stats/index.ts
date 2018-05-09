@@ -2,13 +2,13 @@ import { setPlayerStatsStatus } from 'client/app/state/action-creators/player-st
 import { GET_PLAYER_STATS } from 'client/app/state/action-types'
 import {
   STATUS_AGGREGATION_CHANGE_REQUEST_SENT,
-  STATUS_WAITING_FOR_PLAYER_STATS
+  STATUS_WAITING_FOR_PLAYER_STATS,
 } from 'client/app/state/reducers/player-stats/default-state'
-import { IAction } from 'client/app/state/store'
 import { CHANGE_AGGREGATION } from 'client/web-workers/_message-types'
 import { PlayerStatsList } from 'server/routes/api/player-stats/_interfaces'
 import PlayerStatsWorker = require('worker-loader!web-workers/player-stats')
 
+import { IAction } from '../../../store/_interfaces'
 import messageHandler from './message-handler'
 
 const playerStatsWorker: Worker = new PlayerStatsWorker()

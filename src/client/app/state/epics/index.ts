@@ -1,12 +1,13 @@
 import 'rxjs/add/operator/filter'
 import 'rxjs/add/operator/map'
 
-import { IAction, IState } from 'client/app/state/store'
 import { Dispatch, Store } from 'redux'
 import { ActionsObservable, combineEpics, Epic } from 'redux-observable'
 import { filter, map } from 'rxjs/operators'
 
 import { GET_PLAYER_STATS, REQUEST_NEW_PLAYER_STATS_AGGREGATION } from '../action-types'
+import { IState } from '../reducers/_interfaces'
+import { IAction } from '../store/_interfaces'
 import { getPlayerStatsFromWebWorker, requestAggregationChangeFromWebWorker } from './web-worker-instances/player-stats'
 
 const rootEpic = combineEpics(

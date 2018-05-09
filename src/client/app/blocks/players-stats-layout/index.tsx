@@ -6,12 +6,14 @@ import PartitionLayout, {
 import Waiting from 'client/app/components/waiting-ripple/waiting-ripple.componnent'
 import { requestAggregation } from 'client/app/state/action-creators/player-stats'
 import { STATUS_PLAYER_STATS_RECEIVED } from 'client/app/state/reducers/player-stats/default-state'
-import { IAction, IState } from 'client/app/state/store'
 import { FREE_THROWS, PlayerHierarchy, THREE_POINTERS, TWO_POINTERS } from 'client/web-workers/player-stats/data-mapper'
 import { HierarchyNode } from 'd3'
 import * as React from 'react'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
+
+import { IState } from '../../state/reducers/_interfaces'
+import { IAction } from '../../state/store/_interfaces'
 
 export default connect(mapStateToProps, mapDispatchToProps)(playerShotsLayoutContainer)
 

@@ -22,12 +22,3 @@ const store = createStore(
 )
 
 export default store
-
-export interface IState {
-  playerStats: IPlayerStatsState
-}
-
-export interface IAction {
-  type: string,
-  payload?: any
-}
