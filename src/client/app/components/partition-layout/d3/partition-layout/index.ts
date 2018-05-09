@@ -7,6 +7,8 @@ import { CLICK, COLUMN_GROUP, DOUBLE_CLICK, GRAPH_CLASS } from './_constants'
 import { drawColumn } from './draw'
 import { updateScaleToZoom, zoomInOnMousePointer, zoomInOnNode } from './event-handlers/zoom'
 
+import 'rxjs/add/operator/debounceTime'
+
 export interface ID3PartitionProps {
   domNode: SVGSVGElement
   aggregations: IPartitionHierarchy

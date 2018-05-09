@@ -36,6 +36,9 @@ const config: webpack.Configuration = {
 
       {
         enforce: 'pre',
+        exclude: [
+          path.join(process.cwd(), 'node_modules')
+        ],
         loader: 'source-map-loader',
         test: /\.js$/
       },
