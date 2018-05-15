@@ -21,10 +21,11 @@ export const requestPlayerStats = (_store: Store<IState>) => (next: Dispatch<IAc
 }
 
 export const requestAggregationChangeFromWebWorker =
-  (_store: Store<IState>) => (next: Dispatch<IAction>) => (action: IAction) => {
+  (store: Store<IState>) => (next: Dispatch<IAction>) => (action: IAction) => {
+    const { list } = store.getState().playerStats
     if (action.type === REQUEST_NEW_PLAYER_STATS_AGGREGATION) {
       playerStatsWorker.postMessage({
-        payload: action.payload,
+        payload: { aggregationOrder: action.payload, list },
         type: CHANGE_AGGREGATION
       })
     }

@@ -1,6 +1,6 @@
 /* tslint:disable:cognitive-complexity */
+import { IPartitionHierarchy } from 'interactive-partition-layout'
 import { IPlayerStatsListItem } from 'server/routes/api/player-stats/_interfaces'
-import { IPartitionHierarchy } from '../../../app/components/partition-layout/d3/_interfaces'
 
 export const THREE_POINTERS = '3 Pointers'
 export const TWO_POINTERS = '2 Pointers'
